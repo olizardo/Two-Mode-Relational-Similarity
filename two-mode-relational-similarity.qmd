@@ -1,0 +1,167 @@
+---
+title: "Two Mode Networks and Relational Similarity"
+author: "Omar Lizardo"
+date: "`r Sys.Date()`"
+---
+
+# Setup
+```{r setup}
+    knitr::opts_chunk$set(include = TRUE, echo = TRUE, warning = FALSE, message = FALSE)
+    library(here)
+    library(magrittr)
+    library(dplyr)
+    library(ggpubr)
+    library(sjPlot)
+    library(factoextra)
+    source("tm.corr.dist.R")
+    source("gen.sim.corr.R")
+```
+
+# Data
+```{r Southern women data}
+    A <- matrix(
+         c(
+          1, 1, 1, 1, 1,  1, 0, 1, 1,  0, 0, 0, 0, 0, 
+          1, 1, 1, 0, 1,  1, 1, 1, 0,  0, 0, 0, 0, 0, 
+          0, 1, 1, 1, 1,  1, 1, 1, 1,  0, 0, 0, 0, 0, 
+          1, 0, 1, 1, 1,  1, 1, 1, 0,  0, 0, 0, 0, 0, 
+          0, 0, 1, 1, 1,  0, 1, 0, 0,  0, 0, 0, 0, 0, 
+          0, 0, 1, 0, 1,  1, 0, 1, 0,  0, 0, 0, 0, 0, 
+          0, 0, 0, 0, 1,  1, 1, 1, 0,  0, 0, 0, 0, 0, 
+          0, 0, 0, 0, 1,  0, 1, 1, 1,  0, 0, 0, 0, 0, 
+          
+          0, 0, 0, 0, 0,  0, 1, 1, 1,  0, 0, 1, 0, 0, 
+          0, 0, 0, 0, 0,  0, 0, 1, 1,  1, 0, 1, 0, 0, 
+          0, 0, 0, 0, 0,  0, 0, 1, 1,  1, 0, 1, 1, 1,
+          0, 0, 0, 0, 0,  0, 1, 1, 1,  1, 0, 1, 1, 1,
+          0, 0, 0, 0, 0,  0, 1, 0, 1,  1, 1, 1, 1, 1,
+          0, 0, 0, 0, 0,  0, 1, 1, 0,  1, 1, 1, 0, 0,
+          0, 0, 0, 0, 0,  0, 0, 0, 1,  0, 1, 0, 0, 0,
+          0, 0, 0, 0, 0,  0, 0, 0, 1,  0, 1, 1, 1, 0, 
+          
+          0, 0, 0, 0, 0,  1, 0, 1, 1,  0, 0, 0, 0, 0,
+          0, 0, 0, 0, 0,  0, 0, 1, 1,  0, 0, 0, 0, 0),
+          ncol = 14, byrow = TRUE)
+     w <- c("EVELYN", "LAURA", "THERESA", "BRENDA", "CHARLOTTE", "FRANCES", "ELEANOR", "RUTH", "VERNE", "MYRA", "KATHERINE", "SYLVIA", "NORA", "HELEN", "OLIVIA", "FLORA", "PEARL", "DOROTHY")
+     e <- paste("E", c(1:14), sep = "")
+     rownames(A) <- w
+     colnames(A) <- e
+     
+     affil.el <- data.frame(matrix(ncol = 2, nrow = 0))
+     k <- 1
+     for (i in 1:nrow(A)) {
+         for(j in 1:ncol(A)) {
+             if (A[i, j] == 1) {
+               affil.el[k, 1] = w[i]
+               affil.el[k, 2] = e[j]
+             k <- k + 1
+                 }
+             }
+     }
+     A
+```
+
+# Analysis
+
+```{r Plot Function}
+    plot.mds <- function(x, t = "", k = 3, f.size = 12) {
+     # Compute MDS
+     mds <- x %>%
+       dist() %>% 
+       cmdscale() %>%
+       as_tibble()
+     colnames(mds) <- c("Dim.1", "Dim.2")
+     # Clustering
+     hclus.cent <- eclust(mds, "hclust", 
+                       method = "ward.D2",
+                       k = k, graph = FALSE)$cluster %>% 
+        as.factor() %>% 
+        as_tibble() %>% 
+        cbind(mds)  %>% 
+        group_by(value) %>% 
+        summarize(across(starts_with("Dim"), mean)) %>% 
+        dplyr::select(-1)
+     km.clust <- eclust(mds, 
+                       "kmeans", k = hclus.cent, graph = FALSE)$cluster %>% 
+       as.factor()
+      mds <- mds %>%
+        mutate(groups = km.clust)
+      # Plot and color by groups
+      p <- ggscatter(mds, x = "Dim.1", y = "Dim.2", 
+              label = rownames(x),
+              color = "groups",
+              palette = "Dark2",
+              size = 1.5,
+              font.label = f.size,
+              label.rectangle = TRUE,
+              ellipse.type = "convex",
+              ellipse = TRUE,
+              ellipse.alpha = 0.25,
+              ellipse.border.remove = TRUE,
+              repel = TRUE)
+      p <- p + theme_minimal()
+      p <- p + theme(legend.position = "none", 
+                     axis.text = element_text(size = 16),
+                     axis.title = element_text(size = 20),
+                     title = element_text(size = 24)
+                     )
+      p <- p + ggtitle(t)
+    return(p)
+    }
+```
+
+
+```{r Clusters for actors and events based on gsr and tmrs}
+    #Actors
+    plot.mds(gen.sim.corr(A)$row.sims, k = 3, f.size = 14,
+             t = "Generalized Relational Similarity (Actors)")
+    save_plot(here("Plots", "grm-actors.png"), width = 30, height = 25)
+    plot.mds(tm.corr.dist(A)$row.sims, k = 3, f.size = 14,
+             t = "Two Mode Relational Similarity (Actors)")
+    save_plot(here("Plots", "tmrs-actors.png"), width = 30, height = 25)
+    #Events
+    plot.mds(gen.sim.corr(A)$col.sims, k = 5, f.size = 18,
+             t = "Generalized Relational Similarity (Events)")
+    save_plot(here("Plots", "grm-events.png"), width = 30, height = 25)
+    plot.mds(tm.corr.dist(A)$col.sims, k = 5, f.size = 18,
+             t = "Two Mode Relational Similarity (Events)")
+    save_plot(here("Plots", "tmrs-events.png"), width = 30, height = 25)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
