@@ -317,13 +317,13 @@ Where everything is as before. It is easy to see that equations \ref{eq:8} and \
 \begin{figure}[ht!]
      \begin{subfigure}[b]{1.0\textwidth}
         \centering
-        \includegraphics[width=0.7\textwidth]{figs/grm-actors.png}
+        \includegraphics[width=0.7\textwidth]{Plots/grm-actors.png}
         \caption{}
         \label{fig:grm-actors}
     \end{subfigure} 
      \begin{subfigure}[b]{1.0\textwidth}
         \centering
-        \includegraphics[width=0.7\textwidth]{figs/tmrs-actors.png}
+        \includegraphics[width=0.7\textwidth]{Plots/tmrs-actors.png}
         \caption{}
         \label{fig:tmrs-actors}
     \end{subfigure} 
@@ -332,7 +332,7 @@ Where everything is as before. It is easy to see that equations \ref{eq:8} and \
  \end{figure}
 
 \section{Analysis of Southern Women Data}
-In this section, I re-analyze Davis et al.'s \citeyearpar{Davis1941} Southern Women Data---also analyzed by Kovacs---showing that both Kovacs's iterated approach ($D^{grs}$) and the more direct two-mode approach ($D^{tmrs}$) yield comparable results. Like Kovacs, I take Doreian et al.'s generalized blockmodeling partitioning of actors and events as a reference point \citeyearpar[Table 4]{doreian2004}. An optimal ``unsupervised'' similarity-based partition should thus yield three clusters of actors $C_1^A =$ \{Evelyn, Laura, Theresa, Brenda, Charlotte, Frances, Eleanor, Ruth\}, $C_2^A=$ \{Verne Myra, Katherine, Sylvia, Nora, Helen, Olivia, Flora\}, and $C_3^A=$ \{Pearl, Dorothy\} and three clusters of events $C_1^E=$ \{$E_1$, $E_2$, $E_3$, $E_4$, $E_5$\}, $C_2^E=$ \{$E_6$, $E_7$, $E_8$, $E_9$\}, $C_3^E=$ \{$E_{10}$, $E_{11}$, $E_{12}$, $E_{13}$, $E_{14}$\}. Figures \ref{fig:actors} and \ref{fig:events} summarize the main thrust of the findings.\footnote{All plots are built using the \texttt{ggplot2} grammar of graphics \citep{wickham16}.}
+In this section, I re-analyze Davis et al.'s \citeyearpar{davis1941} Southern Women Data---also analyzed by Kovacs---showing that both Kovacs's iterated approach ($D^{grs}$) and the more direct two-mode approach ($D^{tmrs}$) yield comparable results. Like Kovacs, I take Doreian et al.'s generalized blockmodeling partitioning of actors and events as a reference point \citeyearpar[Table 4]{doreian2004}. An optimal ``unsupervised'' similarity-based partition should thus yield three clusters of actors $C_1^A =$ \{Evelyn, Laura, Theresa, Brenda, Charlotte, Frances, Eleanor, Ruth\}, $C_2^A=$ \{Verne Myra, Katherine, Sylvia, Nora, Helen, Olivia, Flora\}, and $C_3^A=$ \{Pearl, Dorothy\} and three clusters of events $C_1^E=$ \{$E_1$, $E_2$, $E_3$, $E_4$, $E_5$\}, $C_2^E=$ \{$E_6$, $E_7$, $E_8$, $E_9$\}, $C_3^E=$ \{$E_{10}$, $E_{11}$, $E_{12}$, $E_{13}$, $E_{14}$\}. Figures \ref{fig:actors} and \ref{fig:events} summarize the main thrust of the findings.\footnote{All plots are built using the \texttt{ggplot2} grammar of graphics \citep{wickham16}.}
  
  Figure \ref{fig:grm-actors} replicates Kovacs's \citeyearpar{kovacs2010} Figure 12b exactly using the author's implementation of Kovacs's algorithm written as a function for the \textit{R} statistical computing environment (see Supplementary materials). The algorithm converged (using $\epsilon = 0.001$) after fourteen iterations. As Kovacs noted, the distribution of points in the two-dimensional MDS space obtained using the generalized relational similarities corresponds to the generalized blockmodeling solution reported by Doreian et al., with two large sets of similar actors separated from one another and from the more peripheral Dorothy and Pearl. Although the k-means clustering misclassifies Pearl as belonging to the first large cluster and puts Dorothy in her own singleton cluster. 
  
@@ -341,13 +341,13 @@ In this section, I re-analyze Davis et al.'s \citeyearpar{Davis1941} Southern Wo
   \begin{figure}[ht!]
      \begin{subfigure}[b]{1.0\textwidth}
         \centering
-        \includegraphics[width=0.7\textwidth]{figs/grm-events.png}
+        \includegraphics[width=0.7\textwidth]{Plots/grm-events.png}
         \caption{}
         \label{fig:grm-events}
     \end{subfigure} 
      \begin{subfigure}[b]{1.0\textwidth}
         \centering
-        \includegraphics[width=0.7\textwidth]{figs/tmrs-events.png}
+        \includegraphics[width=0.7\textwidth]{Plots/tmrs-events.png}
         \caption{}
         \label{fig:tmrs-events}
     \end{subfigure} 
