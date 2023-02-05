@@ -12,7 +12,7 @@ date: "`r Sys.Date()`"
     library(here)
     library(tidyverse)
     source("Functions/tm.corr.dist.R")
-    source("Functions/gen.sim.corr.R")
+    source("C:/Users/Omar Lizardo/Google Drive/R/kovacs-gen-corr/gen.sim.corr.R")
 ```
 
 # Data
