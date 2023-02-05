@@ -7,14 +7,12 @@ date: "`r Sys.Date()`"
 # Setup
 ```{r setup}
     knitr::opts_chunk$set(include = TRUE, echo = TRUE, warning = FALSE, message = FALSE)
-    library(here)
-    library(magrittr)
-    library(dplyr)
     library(ggpubr)
-    library(sjPlot)
     library(factoextra)
-    source("tm.corr.dist.R")
-    source("gen.sim.corr.R")
+    library(here)
+    library(tidyverse)
+    source("Functions/tm.corr.dist.R")
+    source("Functions/gen.sim.corr.R")
 ```
 
 # Data
@@ -115,17 +113,17 @@ date: "`r Sys.Date()`"
     #Actors
     plot.mds(gen.sim.corr(A)$row.sims, k = 3, f.size = 14,
              t = "Generalized Relational Similarity (Actors)")
-    save_plot(here("Plots", "grm-actors.png"), width = 30, height = 25)
+    sjPlot::save_plot(here("Plots", "grm-actors.png"), width = 30, height = 25)
     plot.mds(tm.corr.dist(A)$row.sims, k = 3, f.size = 14,
              t = "Two Mode Relational Similarity (Actors)")
-    save_plot(here("Plots", "tmrs-actors.png"), width = 30, height = 25)
+    sjPlot::save_plot(here("Plots", "tmrs-actors.png"), width = 30, height = 25)
     #Events
     plot.mds(gen.sim.corr(A)$col.sims, k = 5, f.size = 18,
              t = "Generalized Relational Similarity (Events)")
-    save_plot(here("Plots", "grm-events.png"), width = 30, height = 25)
+    sjPlot::save_plot(here("Plots", "grm-events.png"), width = 30, height = 25)
     plot.mds(tm.corr.dist(A)$col.sims, k = 5, f.size = 18,
              t = "Two Mode Relational Similarity (Events)")
-    save_plot(here("Plots", "tmrs-events.png"), width = 30, height = 25)
+    sjPlot::save_plot(here("Plots", "tmrs-events.png"), width = 30, height = 25)
 ```
 
 
