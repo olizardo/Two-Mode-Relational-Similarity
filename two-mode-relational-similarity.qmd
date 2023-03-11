@@ -11,8 +11,6 @@ date: "`r Sys.Date()`"
     library(factoextra)
     library(here)
     library(tidyverse)
-    source("Functions/tm.corr.dist.R")
-    source("C:/Users/Omar Lizardo/Google Drive/R/kovacs-gen-corr/gen.sim.corr.R")
 ```
 
 # Data
@@ -64,6 +62,7 @@ date: "`r Sys.Date()`"
 ```{r Plot Function}
     plot.mds <- function(x, t = "", k = 3, f.size = 12) {
      # Compute MDS
+     x <- (1 - x)/2
      mds <- x %>%
        dist() %>% 
        cmdscale() %>%
@@ -110,6 +109,8 @@ date: "`r Sys.Date()`"
 
 
 ```{r Clusters for actors and events based on gsr and tmrs}
+    source("Functions/tm.corr.dist.R")
+    source("Functions/gen.sim.corr.R")
     #Actors
     plot.mds(gen.sim.corr(A)$row.sims, k = 3, f.size = 14,
              t = "Generalized Relational Similarity (Actors)")
