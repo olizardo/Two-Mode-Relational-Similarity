@@ -58,16 +58,7 @@ date: "`r Sys.Date()`"
      A
 ```
 
-# Analysis
-```{r Clusters for actors and events based on gsr and tmrs}
-    source("Functions/tm.corr.dist.R")
-    source("Functions/gen.sim.corr.R")
-    #Actors
-    gs.a <- gen.sim.corr(A)$row.sims
-    gs.e <- gen.sim.corr(A)$col.sims
-    tm.a <- tm.corr.dist(A)$row.sims
-    tm.e <- tm.corr.dist(A)$col.sims
-```
+# Functions
 
 ```{r Functions}
     get.mds <- function(x) {
@@ -122,25 +113,38 @@ date: "`r Sys.Date()`"
     }
 ```
 
-```{r Performing MDS and Clustering}
-    mds.gs.a <- get.mds(gs.a)
-    mds.gs.e <- get.mds(gs.e)
-    mds.tm.a <- get.mds(tm.a)
-    mds.tm.e <- get.mds(tm.e)
-    
+# Analysis
+```{r Clusters for actors and events based on gsr and tmrs}
+    source("Functions/tm.corr.dist.R")
+    source("Functions/gen.sim.corr.R")
+    #Actors
+    gs.a <- gen.sim.corr(A)
+    gs.e <- gen.sim.corr(A)
+    tm.a <- tm.corr.dist(A)
+    tm.e <- tm.corr.dist(A)
+```
+
+```{r Performing MDS}
+    mds.gs.a <- get.mds(gs.a$row.sims)
+    mds.gs.e <- get.mds(gs.e$col.sims)
+    mds.tm.a <- get.mds(tm.a$row.sims)
+    mds.tm.e <- get.mds(tm.e$col.sims)
+```
+
+```{Performing Clustering}
     clus.gs.a <- get.clus(mds.gs.a)
     clus.gs.e <- get.clus(mds.gs.e)
     clus.tm.a <- get.clus(mds.tm.a)
     clus.tm.e <- get.clus(mds.tm.e)
 ```
    
-   
+# Plots
 ```{r Plotting}
     plot.gs.a <- get.plot(clus.gs.a, 
                           t = "Generalized Relational Similarity (Actors)")
     plot.gs.a
     save_plot(here("Plots", "grs-actors.png"), width = 30, height = 25)
-    
+
     plot.gs.e <- get.plot(clus.gs.e, 
                           t = "Generalized Relational Similarity (Events)")
     plot.gs.e
