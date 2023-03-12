@@ -7,6 +7,7 @@ date: "`r Sys.Date()`"
 # Setup
 ```{r setup}
     knitr::opts_chunk$set(include = TRUE, echo = TRUE, warning = FALSE, message = FALSE)
+    library(dendextend)
     library(factoextra)
     library(ggpubr)
     library(here)
@@ -65,7 +66,7 @@ date: "`r Sys.Date()`"
      # Compute MDS
      x <- (1 - x)/2
      x <- x %>%
-       dist() %>% 
+       as.dist() %>% 
        cmdscale() 
      colnames(x) <- c("Dim.1", "Dim.2")
      return(x)
@@ -161,8 +162,34 @@ date: "`r Sys.Date()`"
     save_plot(here("Plots", "tmrs-events.png"), width = 30, height = 25)
 ```
 
+```{r}
+    get.dist <- function(x) {
+     # Compute MDS
+     x <- (1 - x)/2
+     x <- x %>%
+       as.dist()
+    return(x)
+    }
+    dist.gs.a <- get.dist(gs.a$row.sims)
+    dist.tm.a <- get.dist(tm.a$row.sims)
+    hc.gs.a <- hclust(dist.gs.a, method = "complete")
+    hc.tm.a <- hclust(dist.tm.a, method = "complete")
+    dend.gs.a <- as.dendrogram(hc.gs.a)
+    dend.tm.a <- as.dendrogram(hc.tm.a)
+```
 
 
+```{r}
+    untang.dends <- dendlist(dend.gs.a, dend.tm.a) %>% 
+      untangle(method = "step2side")
+    png(file = here("Plots", "untang.png"), width=1200, height=600)
+    plot(untang.dends, 
+         main = paste("Entanglement =", round(entanglement(untang.dends), 2)),
+         sub = paste(("Cophenetic Correlation ="), 
+                     round(cor_cophenetic(dend.gs.a, dend.tm.a), 2)))
+    dev.off()
+    
+```
 
 
 
