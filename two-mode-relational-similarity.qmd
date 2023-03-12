@@ -23,9 +23,9 @@ date: "`r Sys.Date()`"
           0, 1, 1, 1, 1,  1, 1, 1, 1,  0, 0, 0, 0, 0, 
           1, 0, 1, 1, 1,  1, 1, 1, 0,  0, 0, 0, 0, 0, 
           0, 0, 1, 1, 1,  0, 1, 0, 0,  0, 0, 0, 0, 0, 
-          0, 0, 1, 0, 1,  1, 0, 1, 0,  0, 0, 0, 0, 0, 
-          0, 0, 0, 0, 1,  1, 1, 1, 0,  0, 0, 0, 0, 0, 
-          0, 0, 0, 0, 1,  0, 1, 1, 1,  0, 0, 0, 0, 0, 
+          0, 0, 1, 1, 1,  1, 0, 1, 0,  0, 0, 0, 0, 0, 
+          0, 0, 0, 1, 1,  1, 1, 1, 0,  0, 0, 0, 0, 0, 
+          0, 0, 0, 1, 1,  0, 1, 1, 1,  0, 0, 0, 0, 0, 
           
           0, 0, 0, 0, 0,  0, 1, 1, 1,  0, 0, 1, 0, 0, 
           0, 0, 0, 0, 0,  0, 0, 1, 1,  1, 0, 1, 0, 0, 
@@ -34,7 +34,7 @@ date: "`r Sys.Date()`"
           0, 0, 0, 0, 0,  0, 1, 0, 1,  1, 1, 1, 1, 1,
           0, 0, 0, 0, 0,  0, 1, 1, 0,  1, 1, 1, 0, 0,
           0, 0, 0, 0, 0,  0, 0, 0, 1,  0, 1, 0, 0, 0,
-          0, 0, 0, 0, 0,  0, 0, 0, 1,  0, 1, 1, 1, 0, 
+          0, 0, 0, 0, 0,  0, 0, 0, 1,  0, 1, 0, 0, 0, 
           
           0, 0, 0, 0, 0,  1, 0, 1, 1,  0, 0, 0, 0, 0,
           0, 0, 0, 0, 0,  0, 0, 1, 1,  0, 0, 0, 0, 0),
@@ -59,7 +59,6 @@ date: "`r Sys.Date()`"
 ```
 
 # Analysis
-
 ```{r Clusters for actors and events based on gsr and tmrs}
     source("Functions/tm.corr.dist.R")
     source("Functions/gen.sim.corr.R")
@@ -74,11 +73,11 @@ date: "`r Sys.Date()`"
     get.mds <- function(x) {
      # Compute MDS
      x <- (1 - x)/2
-     mds <- x %>%
+     x <- x %>%
        dist() %>% 
        cmdscale() 
-     colnames(mds) <- c("Dim.1", "Dim.2")
-     return(mds)
+     colnames(x) <- c("Dim.1", "Dim.2")
+     return(x)
     }
     
     get.clus <- function(x, k = 3) {
@@ -123,7 +122,6 @@ date: "`r Sys.Date()`"
     }
 ```
 
-   
 ```{r Performing MDS and Clustering}
     mds.gs.a <- get.mds(gs.a)
     mds.gs.e <- get.mds(gs.e)
