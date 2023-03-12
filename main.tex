@@ -371,7 +371,28 @@ The generalized similarity model provides a grouping for the events as well (not
 
 Figure~\ref{fig:grm-events} replicates Kocacs's verbal description of the results using generalized relational similarities. A three-group k-means clustering of the distances in the multidimensional scaling space separates the closely-spaced events 1-6 and 10-14. Event 7 is assigned to its own singleton cluster, and events 8 and 9 are assigned to the events 1-6 and events 10-14 clusters respectively. 
 
-As Figure~\ref{fig:tmrs-events} shows, the two-mode relational similarity approach yields results that are somewhat different from those obtained using the generalized relational similarities, but that are in some ways closer to the target clusters from Doreian et al.'s blockmodel solution \citeyearpar{doreian2004}. As with the Kovacs approach, events 1-6 and events 10-14 end up closely spaced and assigned to their own cluster. Events 7 and 8 fall into their own cluster as would be expected given the Doreian et al. partition. Event 9, however, is grouped with the event 10-14 cluster. In all, the two-mode relational similarity approach seems more effective at avoiding singleton clusters than than the generalized similarity measure. 
+As Figure~\ref{fig:tmrs-events} shows, the two-mode relational similarity approach yields results that are somewhat different from those obtained using the generalized relational similarities, but that are in some ways closer to the target clusters from Doreian et al.'s blockmodel solution \citeyearpar{doreian2004}. As with the Kovacs approach, events 1-6 and events 10-14 end up closely spaced and assigned to their own cluster. Events 7 and 8 fall into their own cluster as would be expected given the Doreian et al. partition. Event 9, however, is grouped with the event 10-14 cluster. In all, the two-mode relational similarity approach seems more effective at avoiding singleton clusters than the generalized similarity measure. 
+
+  \begin{figure}[ht!]
+     \begin{subfigure}[b]{1.0\textwidth}
+        \centering
+        \includegraphics[width=0.7\textwidth]{Plots/un.png}
+        \caption{}
+        \label{fig:grm-events}
+    \end{subfigure} 
+     \begin{subfigure}[b]{1.0\textwidth}
+        \centering
+        \includegraphics[width=0.7\textwidth]{Plots/tmrs-events.png}
+        \caption{}
+        \label{fig:tmrs-events}
+    \end{subfigure} 
+    \caption{.}
+    \label{fig:events}
+ \end{figure}
+
+
+\subsection{Correspondence between approaches}
+Figures \ref{fig:actors} and \ref{fig:events} suggest that the solutions returned by Kovacs's generalized relational similarities and the two-mode relational similarities are themselves similar. To get a more precise estimate of exactly how similar, we can compare the dendrograms produced by a hierarchical clustering of both actors and events derived from each of the distances. 
 
 \section{Conclusion}
 Kovacs \citeyearpar{kovacs2010} made a case that a desirable metric for relational similarity should respect at least two basic desiderata, which I have referred to as the principles of equivalence and duality, proposing an approach based on iterated correlations that met these criteria. In this short note, I have shown that we can get there using a more straightforward, non-iterative approach, more directly grounded in the principle of duality via the dual projection approach to analyzing two-mode data \citep{everett2013}. 
