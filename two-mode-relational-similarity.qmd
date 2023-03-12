@@ -7,9 +7,10 @@ date: "`r Sys.Date()`"
 # Setup
 ```{r setup}
     knitr::opts_chunk$set(include = TRUE, echo = TRUE, warning = FALSE, message = FALSE)
-    library(ggpubr)
     library(factoextra)
+    library(ggpubr)
     library(here)
+    library(sjPlot)
     library(tidyverse)
 ```
 
@@ -59,37 +60,52 @@ date: "`r Sys.Date()`"
 
 # Analysis
 
-```{r Plot Function}
-    plot.mds <- function(x, t = "", k = 3, f.size = 12) {
+```{r Clusters for actors and events based on gsr and tmrs}
+    source("Functions/tm.corr.dist.R")
+    source("Functions/gen.sim.corr.R")
+    #Actors
+    gs.a <- gen.sim.corr(A)$row.sims
+    gs.e <- gen.sim.corr(A)$col.sims
+    tm.a <- tm.corr.dist(A)$row.sims
+    tm.e <- tm.corr.dist(A)$col.sims
+```
+
+```{r Functions}
+    get.mds <- function(x) {
      # Compute MDS
      x <- (1 - x)/2
      mds <- x %>%
        dist() %>% 
-       cmdscale() %>%
-       as_tibble()
+       cmdscale() 
      colnames(mds) <- c("Dim.1", "Dim.2")
-     # Clustering
-     hclus.cent <- eclust(mds, "hclust", 
-                       method = "ward.D2",
-                       k = k, graph = FALSE)$cluster %>% 
-        as.factor() %>% 
-        as_tibble() %>% 
-        cbind(mds)  %>% 
-        group_by(value) %>% 
-        summarize(across(starts_with("Dim"), mean)) %>% 
-        dplyr::select(-1)
-     km.clust <- eclust(mds, 
-                       "kmeans", k = hclus.cent, graph = FALSE)$cluster %>% 
-       as.factor()
-      mds <- mds %>%
-        mutate(groups = km.clust)
-      # Plot and color by groups
-      p <- ggscatter(mds, x = "Dim.1", y = "Dim.2", 
-              label = rownames(x),
-              color = "groups",
+     return(mds)
+    }
+    
+    get.clus <- function(x, k = 3) {
+    # Clustering
+      hclus.cent <- tibble(cluster = eclust(x, "hclust", method = "ward.D2",
+                       k = k, graph = FALSE)$cluster) %>% 
+      cbind(x)  %>% 
+      group_by(cluster) %>% 
+      summarize(across(starts_with("Dim"), mean)) %>% 
+      dplyr::select(-1)
+      km.clust <- eclust(x, "kmeans", 
+                       k = hclus.cent, graph = FALSE)$cluster 
+      n <- rownames(x)
+      x <- as_tibble(cbind(x, cluster = km.clust)) %>% 
+        mutate(cluster = factor(cluster)) %>% 
+        mutate(names = n)
+      return(x)    
+      }
+    
+    get.plot <- function(x, t = "", fsize = 14) {
+    # Plot and color by groups
+      p <- ggscatter(x, x = "Dim.1", y = "Dim.2", 
+              label = "names",
+              color = "cluster",
               palette = "Dark2",
               size = 1.5,
-              font.label = f.size,
+              font.label = fsize,
               label.rectangle = TRUE,
               ellipse.type = "convex",
               ellipse = TRUE,
@@ -107,25 +123,43 @@ date: "`r Sys.Date()`"
     }
 ```
 
-
-```{r Clusters for actors and events based on gsr and tmrs}
-    source("Functions/tm.corr.dist.R")
-    source("Functions/gen.sim.corr.R")
-    #Actors
-    plot.mds(gen.sim.corr(A)$row.sims, k = 3, f.size = 14,
-             t = "Generalized Relational Similarity (Actors)")
-    sjPlot::save_plot(here("Plots", "grm-actors.png"), width = 30, height = 25)
-    plot.mds(tm.corr.dist(A)$row.sims, k = 3, f.size = 14,
-             t = "Two Mode Relational Similarity (Actors)")
-    sjPlot::save_plot(here("Plots", "tmrs-actors.png"), width = 30, height = 25)
-    #Events
-    plot.mds(gen.sim.corr(A)$col.sims, k = 5, f.size = 18,
-             t = "Generalized Relational Similarity (Events)")
-    sjPlot::save_plot(here("Plots", "grm-events.png"), width = 30, height = 25)
-    plot.mds(tm.corr.dist(A)$col.sims, k = 5, f.size = 18,
-             t = "Two Mode Relational Similarity (Events)")
-    sjPlot::save_plot(here("Plots", "tmrs-events.png"), width = 30, height = 25)
+   
+```{r Performing MDS and Clustering}
+    mds.gs.a <- get.mds(gs.a)
+    mds.gs.e <- get.mds(gs.e)
+    mds.tm.a <- get.mds(tm.a)
+    mds.tm.e <- get.mds(tm.e)
+    
+    clus.gs.a <- get.clus(mds.gs.a)
+    clus.gs.e <- get.clus(mds.gs.e)
+    clus.tm.a <- get.clus(mds.tm.a)
+    clus.tm.e <- get.clus(mds.tm.e)
 ```
+   
+   
+```{r Plotting}
+    plot.gs.a <- get.plot(clus.gs.a, 
+                          t = "Generalized Relational Similarity (Actors)")
+    plot.gs.a
+    save_plot(here("Plots", "grs-actors.png"), width = 30, height = 25)
+    
+    plot.gs.e <- get.plot(clus.gs.e, 
+                          t = "Generalized Relational Similarity (Events)")
+    plot.gs.e
+    save_plot(here("Plots", "grs-events.png"), width = 30, height = 25)
+    
+    plot.tm.a <- get.plot(clus.tm.a, fsize = 18,
+                          t = "Two-Mode Relational Similarity (Actors)")
+    plot.tm.a
+    save_plot(here("Plots", "tmrs-actors.png"), width = 30, height = 25)
+    
+    plot.tm.e <- get.plot(clus.tm.e, fsize = 18,
+                          t = "Two-Mode Relational Similarity (Events)")
+    plot.tm.e
+    save_plot(here("Plots", "tmrs-events.png"), width = 30, height = 25)
+```
+
+
 
 
 
