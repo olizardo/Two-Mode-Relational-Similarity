@@ -127,7 +127,7 @@
  % }
 % Here goes the abstract
 \begin{abstract}
-In a previous paper, Kovacs \citeyearpar{kovacs2010} proposed a generalized relational similarity measure based on iterated correlations of entities in a network calibrated by their relational similarity to other entities. Here I show that, in the case of two-mode network data, Kovacs's approach can be simplified and generalized similarities calculated non-iteratively. The basic idea is to rely on initial similarities calculated from transforming the two-mode data into one-mode projections using the familiar duality approach due to Breiger \citeyearpar{breiger1974}. I refer to this as the two-mode correlation distance, and show, using the Southern women data, that it yields results substantively identical to Kovacs's. 
+In a previous paper, Kovacs \citeyearpar{kovacs2010} proposed a generalized relational similarity measure based on iterated correlations of entities in a network calibrated by their relational similarity to other entities. Here I show that, in the case of two-mode network data, Kovacs's approach can be simplified and generalized similarities calculated non-iteratively. The basic idea is to rely on initial similarities calculated from transforming the two-mode data into one-mode projections using the familiar duality approach due to Breiger \citeyearpar{breiger1974}. I refer to this as the two-mode correlation distance and show, using the Southern Women data, that it yields results substantively identical to Kovacs's. 
 \end{abstract}
 
 % Use if graphical abstract is present
@@ -137,13 +137,13 @@ In a previous paper, Kovacs \citeyearpar{kovacs2010} proposed a generalized rela
 
  Research highlights
 \begin{highlights}
-    \item Previous work has developed measures of generalized similarity based on iterated correlations for two mode data.
-    \item This paper proposes a non-iterative measure of generalized similarity for two mode data based on the projection approach.
-    \item The paper shows that the two mode relational similarity performs as well as the iterative correlations approach. 
+    \item Previous work has developed measures of generalized similarity based on iterated correlations for two-mode data.
+    \item This paper proposes a non-iterative measure of generalized similarity for two-mode data based on the projection approach.
+    \item The paper shows that the two-mode relational similarity performs as well as the iterative correlations approach. 
 \end{highlights}
 
 % Keywords
-% Each keyword is seperated by \sep
+% Each keyword is separated by \sep
 \begin{keywords}
 Generalized similarity \sep Duality \sep Two-mode networks \sep Correlation distance \sep Projection
 \end{keywords}
@@ -153,7 +153,7 @@ Generalized similarity \sep Duality \sep Two-mode networks \sep Correlation dist
 \newpage
 
 \section{Introduction}
-In a previous paper, Kovacs \citeyearpar{kovacs2010} introduced a generalized relational similarity measure based on iterated correlations, applicable to two-mode and one-mode network data. According to Kovacs, a desirable generalized similarity measure must have two desirable properties. First, (1) it should respect the \textit{principle of equivalence}, such that it classifies actors as similar if they have similar relations to other objects who are themselves similar Second, (2) the similarity measure should respect the \textit{principle of duality} \citep{breiger1974}, such that it classifies actors as similar if they have similar relations to similar objects, and objects as similar if they have similar relations to similar actors within the same system. 
+In a previous paper, Kovacs \citeyearpar{kovacs2010} introduced a generalized relational similarity measure based on iterated correlations applicable to two-mode and one-mode network data. According to Kovacs, a desirable generalized similarity measure must have two desirable properties. First, (1) it should respect the \textit{principle of equivalence}, such that it classifies actors as similar if they have similar relations to other objects who are themselves similar Second, (2) the similarity measure should respect the \textit{principle of duality} \citep{breiger1974}, such that it classifies actors as similar if they have similar relations to similar objects, and objects as similar if they have similar relations to similar actors within the same system. 
 
 Kovacs's key observation is that such a generalized relational similarity measure could be obtained by transforming the usual correlation distance measure. Particularly, Kovacs begins by noting that in the two-mode case, the correlation distance between any pair of actors $D(A)^{cor}_{i,j}$ be expressed as a function of their row profiles in actors $\times$ objects affiliation matrix $\mathbf{M}$ as follows:
 
@@ -224,10 +224,10 @@ Kovacs notes that if we have access to an analogous matrix of similarities betwe
     \label{eq:3}
 \end{equation}
 
-Typically, people only have access to the network information and not exogenous indication of pre-existing similarities between actors or objects, required to compute \ref{eq:2}, and \ref{eq:3}. Kovacs's (ingenious) solution is to use the duality property and compute ``reflective similarities'' by first computing initial object similarities by plugging $D(A)_{cor}$ into \ref{eq:3} (equivalent to substituting the identity matrix, of dimensions $O \times O$, into the slot occupied by $\mathbf{S(O)}$ in \ref{eq:2}). Then using the resulting actor similarities to compute generalized object similarities. This is done by substituting an $A \times A$ matrix of $D(A)_{grs}$ values obtained in the first step into the slot occupied by $\mathbf{S(A)}$ in \ref{eq:3}. The iterations continue until both $D(A)_{grs}$ and $D(A)_{grs}$ ``freeze'' according to some stopping criterion ($\epsilon$). 
+Typically, people only have access to the network information and not exogenous indication of pre-existing similarities between actors or objects, required to compute \ref{eq:2}, and \ref{eq:3}. Kovacs's (ingenious) solution is to use the duality property and compute ``reflective similarities'' by first computing initial object similarities by plugging $D(A)_{cor}$ into \ref{eq:3} (equivalent to substituting the identity matrix, of dimensions $O \times O$, into the slot occupied by $\mathbf{S(O)}$ in \ref{eq:2}). Then using the resulting actor similarities to compute generalized object similarities. This is done by substituting a $A \times A$ matrix of $D(A)_{grs}$ values obtained in the first step into the slot occupied by $\mathbf{S(A)}$ in \ref{eq:3}. The iterations continue until both $D(A)_{grs}$ and $D(A)_{grs}$ ``freeze'' according to some stopping criterion ($\epsilon$). 
 
 \section{Two Mode Generalized Similarities}
-The basic purpose of this comment is to show that there is a simpler alternative to the iteration approach to computing generalized relational similarities in two-mode data. This alternative respects the basic spirit of Kovacs's proposal, namely, the principles of equivalence and duality while exploiting the duality of actors and objects in two-mode networks more directly.
+The basic purpose of this comment is to show that there is a simpler alternative to the iteration approach to computing generalized relational similarities in two-mode data. This alternative respects the basic spirit of Kovacs's proposal, namely, the principles of equivalence and duality, while exploiting the duality of actors and objects in two-mode networks more directly.
 
 The basic idea is that similarity matrices that can play the role of $\mathbf{S(A)}$ and $\mathbf{S(O)}$ can be obtained from any two-mode network without iteration. Instead, they can be computed via Breiger's \citeyearpar{breiger1974} well-known dual projection approach (see also \citep{everett2013}). 
 
@@ -244,11 +244,11 @@ This procedure has two major steps. First, we obtain actor co-membership ($\math
     \label{eq:5}
 \end{equation}
 
-For both $\mathbf{AA}$ and $\mathbf{OO}$ the $ij^{th}$ entry is the number of objects shared by person's $i$ and $j$ and the number of actors who choose both objects $i$ and $j$ respectively. The diagonal entries in $AA_{ij}$ record the number of objects each actor chooses and the diagonal entries in $OO_{ij}$ record the number of actors choosing each object. 
+For both $\mathbf{AA}$ and $\mathbf{OO}$, the $ij^{th}$ entry is the number of objects shared by persons $i$ and $j$ and the number of actors who choose both objects $i$ and $j$ respectively. The diagonal entries in $AA_{ij}$ record the number of objects each actor chooses, and the diagonal entries in $OO_{ij}$ record the number of actors choosing each object. 
 
-Once we have these once mode projections, it is straightforward to compute measures of similarity across actors based on their co-memberships and across objects in terms of the actors they share. The basic idea is that the similarity between actors increases as the number of common objects chosen increases, and the similarity between objects increases as the number of actors who choose both objects, suitably weighted by both actors ``expansiveness" and object ``popularity" (the diagonal entries of $\mathbf{AA}$ and $\mathbf{OO}$, respectively). 
+Once we have these one-mode projections, it is straightforward to compute similarity measures across actors based on their co-memberships and across objects in terms of the actors they share. The basic idea is that the similarity between actors increases as the number of common objects chosen increases, and the similarity between objects increases as the number of actors who choose both objects, suitably weighted by both actors ``expansiveness" and object ``popularity" (the diagonal entries of $\mathbf{AA}$ and $\mathbf{OO}$, respectively). 
 
-There are many options available here (and the results are invariant to this choice), but a straightforward measure is the cosine similarity. For actors, this is given by:
+Many options are available here (and the results are invariant to this choice), but the cosine similarity is a straightforward candidate. For actors, this is given by:
 
 \begin{equation}
     S(A)^{cos}_{ij} = \frac{AA_{ij}}{\sqrt{AA_{ii}AA_{jj}}}
@@ -262,7 +262,7 @@ And for objects:
     \label{eq:7}
 \end{equation}
 
-We can then compute a distance matrix containing relational similarities between actors and objects directly without need for iteration, which I refer to as \textit{two-mode relationality similarity}. 
+We can then compute a distance matrix containing relational similarities between actors and objects directly without iteration, which I refer to as \textit{two-mode relationality similarity}. 
 
 For actors, this is:
 
@@ -288,7 +288,7 @@ For actors, this is:
     \label{eq:8}
 \end{equation}
 
-And correspondingly, for objects this is given by:
+And correspondingly, for objects, this is given by:
 
 \begin{equation}
     D(O)^{tmrs}_{i,j} = 
@@ -332,11 +332,11 @@ Where everything is as before. It is easy to see that equations \ref{eq:8} and \
  \end{figure}
 
 \section{Analysis of Southern Women Data}
-In this section, I re-analyze Davis et al.'s \citeyearpar{davis1941} Southern Women Data---also analyzed by Kovacs---showing that both Kovacs's iterated approach ($D^{grs}$) and the more direct two-mode approach ($D^{tmrs}$) yield comparable results. Like Kovacs, I take Doreian et al.'s generalized blockmodeling partitioning of actors and events as a reference point \citeyearpar[Table 4]{doreian2004}. An optimal ``unsupervised'' similarity-based partition should thus yield three clusters of actors $C_1^A =$ \{Evelyn, Laura, Theresa, Brenda, Charlotte, Frances, Eleanor, Ruth\}, $C_2^A=$ \{Verne Myra, Katherine, Sylvia, Nora, Helen, Olivia, Flora\}, and $C_3^A=$ \{Pearl, Dorothy\} and three clusters of events $C_1^E=$ \{$E_1$, $E_2$, $E_3$, $E_4$, $E_5$\}, $C_2^E=$ \{$E_6$, $E_7$, $E_8$, $E_9$\}, $C_3^E=$ \{$E_{10}$, $E_{11}$, $E_{12}$, $E_{13}$, $E_{14}$\}. Figures \ref{fig:actors} and \ref{fig:events} summarize the main thrust of the findings.\footnote{All plots are built using the \texttt{ggplot2} grammar of graphics \citep{wickham16}.}
+In this section, I re-analyze Davis et al.'s \citeyearpar{davis1941}, Southern Women Data---also analyzed by Kovacs---showing that both Kovacs's iterated approach ($D^{grs}$) and the more direct two-mode approach ($D^{tmrs}$) yield comparable results. Like Kovacs, I take Doreian et al.'s generalized blockmodeling partitioning of actors and events as a reference point \citeyearpar[Table 4]{doreian2004}. An optimal ``unsupervised'' similarity-based partition should thus yield three clusters of actors $C_1^A =$ \{Evelyn, Laura, Theresa, Brenda, Charlotte, Frances, Eleanor, Ruth\}, $C_2^A=$ \{Verne Myra, Katherine, Sylvia, Nora, Helen, Olivia, Flora\}, and $C_3^A=$ \{Pearl, Dorothy\} and three clusters of events $C_1^E=$ \{$E_1$, $E_2$, $E_3$, $E_4$, $E_5$\}, $C_2^E=$ \{$E_6$, $E_7$, $E_8$, $E_9$\}, $C_3^E=$ \{$E_{10}$, $E_{11}$, $E_{12}$, $E_{13}$, $E_{14}$\}. Figures \ref{fig:actors} and \ref{fig:events} summarize the main thrust of the findings.\footnote{All plots are built using the \texttt{ggplot2} grammar of graphics \citep{wickham16}.}
  
- Figure \ref{fig:grm-actors} replicates Kovacs's \citeyearpar{kovacs2010} Figure 12b exactly using the author's implementation of Kovacs's algorithm written as a function for the \textit{R} statistical computing environment (see Supplementary materials). The algorithm converged (using $\epsilon = 0.001$) after fourteen iterations. As Kovacs noted, the distribution of points in the two-dimensional MDS space obtained using the generalized relational similarities corresponds to the generalized blockmodeling solution reported by Doreian et al., with two large sets of similar actors separated from one another and from the more peripheral Dorothy and Pearl. Although the k-means clustering misclassifies Pearl as belonging to the first large cluster and puts Dorothy in her own singleton cluster. 
+ Figure \ref{fig:grm-actors} replicates Kovacs's \citeyearpar{kovacs2010} Figure 12b exactly using the author's implementation of Kovacs's algorithm written as a function for the \textit{R} statistical computing environment (see Supplementary materials). After fourteen iterations, the algorithm converged (using $\epsilon = 0.001$). As Kovacs noted, the distribution of points in the two-dimensional MDS space obtained using the generalized relational similarities corresponds to the generalized blockmodeling solution reported by Doreian et al., with two large sets of similar actors separated from one another and the more peripheral Dorothy and Pearl. Although the k-means clustering misclassifies Pearl as belonging to the first large cluster and puts Dorothy in her own singleton cluster. 
  
- As Figure~\ref{fig:tmrs-actors} shows, the two-mode relational similarity approach yields comparable results to Kovacs's generalized relational similarities, thus also revealing Doreian et al.'s actor blocks. Notably, the k-means three-cluster solution for the two-mode relational similarities correctly assigns Pearl and Dorothy to their own cluster (coming closer to Doreian et al.'s generalized blockmodeling results), but misclassifies Pearl as also belong to the peripheral third cluster. 
+ As Figure~\ref{fig:tmrs-actors} shows, the two-mode relational similarity approach yields comparable results to Kovacs's generalized relational similarities, thus also revealing Doreian et al.'s actor blocks. Notably, the k-means three-cluster solution for the two-mode relational similarities correctly assigns Pearl and Dorothy to their own cluster (coming closer to Doreian et al.'s generalized blockmodeling results). Still, it misclassifies Pearl as also belonging to the peripheral third cluster. 
 
   \begin{figure}[ht!]
      \begin{subfigure}[b]{1.0\textwidth}
@@ -355,18 +355,18 @@ In this section, I re-analyze Davis et al.'s \citeyearpar{davis1941} Southern Wo
     \label{fig:events}
  \end{figure}
 
-Figure \ref{fig:events} reports the corresponding analysis for the object (events) relational similarities. In the original paper, Kovacs \citeyearpar[206]{kovacs2010}, described these results verbally---no plot was provided---as follows:
+Figure \ref{fig:events} reports the corresponding analysis for relational similarities of the object (events). In the original paper, Kovacs \citeyearpar[206]{kovacs2010}, described these results verbally---no plot was provided---as follows:
 
 \begin{quote}
 The generalized similarity model provides a grouping for the events as well (not shown here). This grouping differs slightly from Doreian et al.'s \citeyearpar{doreian2004} grouping: although the (1, 2, 3, 4, 5) and (10, 11, 12, 13, 14) clusters emerge in the generalized similarity solution as well, the picture differs for events 6, 7, 8, and 9. Event 6 here is clustered together with (1, 2, 3, 4, 5), while events 7, 8 and 9 do not fall into any group but stand separately  (206). 
 \end{quote}
 
-Figure~\ref{fig:grm-events} replicates Kocacs's verbal description of the results using generalized relational similarities. A five-group k-means clustering of the distances in the multidimensional scaling space separates events 1-6 and 10-14, while assigning events 7, 8, and 9 to their own singleton cluster. As Figure~\ref{fig:tmrs-events} shows, the two-mode relational similarity approach yields substantively identical results to Kovacs's relational similarities with respect to events. 
+Figure~\ref{fig:grm-events} replicates Kocacs's verbal description of the results using generalized relational similarities. A five-group k-means clustering of the distances in the multidimensional scaling space separates events 1-6 and 10-14 while assigning events 7, 8, and 9 to their own singleton cluster. As Figure~\ref{fig:tmrs-events} shows, the two-mode relational similarity approach yields substantively identical results to Kovacs's relational similarities regarding events. 
 
 \section{Conclusion}
-Kocavs \citeyearpar{kovacs2010} made a case that a desirable metric for relational similarity should respect at least two basic desiderata, which I have referred to as the principles of equivalence and duality, proposing an approach based on iterated correlations that met these criteria. In this short note, I have shown that we can get there using a more straightforward, non-iterative approach, more directly grounded in the idea of duality via the dual projection approach to the analysis of two-mode data \citep{everett2013}. 
+Kovacs \citeyearpar{kovacs2010} made a case that a desirable metric for relational similarity should respect at least two basic desiderata, which I have referred to as the principles of equivalence and duality, proposing an approach based on iterated correlations that met these criteria. In this short note, I have shown that we can get there using a more straightforward, non-iterative approach, more directly grounded in the principle of duality via the dual projection approach to analyzing two-mode data \citep{everett2013}. 
 
-Like Kovacs, this approach tunes the correlation distances between entities in mode based on their connection to similar entities in the other mode, as revealed by the one-mode projections. A replication of Kovacs's analysis of Davis et al.'s \citeyearpar{davis1941} Southern Women Data, and a re-analysis based on the proposed alternative metric shows that the two mode relational similarity approach yields substantively identical results to those obtained using the generalized similarity strategy. 
+Like Kovacs, this approach tunes the correlation distances between entities in one mode based on their connection to similar entities in the other mode, as revealed by the one-mode projections. A replication of Kovacs's analysis of Davis et al.'s \citeyearpar{davis1941} Southern Women Data and a re-analysis based on the proposed alternative metric shows that the two-mode relational similarity approach yields substantively identical results to those obtained using the generalized similarity strategy. 
 
 %% Loading bibliography style file
 %\bibliographystyle{model1-num-names}
