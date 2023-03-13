@@ -224,7 +224,7 @@ Kovacs notes that if we have access to an analogous matrix of similarities betwe
     \label{eq:3}
 \end{equation}
 
-Typically, people only have access to the network information and not exogenous indication of pre-existing similarities between actors or objects, required to compute \ref{eq:2}, and \ref{eq:3}. Kovacs's (ingenious) solution is to use the duality property and compute ``reflective similarities'' by first computing initial object similarities by plugging $D(A)_{cor}$ into \ref{eq:3} (equivalent to substituting the identity matrix, of dimensions $O \times O$, into the slot occupied by $\mathbf{S(O)}$ in \ref{eq:2}). Then using the resulting actor similarities to compute generalized object similarities. This is done by substituting a $A \times A$ matrix of $D(A)_{grs}$ values obtained in the first step into the slot occupied by $\mathbf{S(A)}$ in \ref{eq:3}. The iterations continue until both $D(A)_{grs}$ and $D(A)_{grs}$ ``freeze'' according to some stopping criterion ($\epsilon$). 
+Typically, we only have access to the network information and not exogenous indication of pre-existing similarities between actors or objects, required to compute \ref{eq:2}, and \ref{eq:3}. Kovacs's (ingenious) solution is to use the duality property and compute ``reflective similarities'' by first computing initial object similarities by plugging $D(A)_{cor}$ into \ref{eq:3} (equivalent to substituting the identity matrix, of dimensions $O \times O$, into the slot occupied by $\mathbf{S(O)}$ in \ref{eq:2}). Then using the resulting actor similarities to compute generalized object similarities. This is done by substituting the $A \times A$ matrix of $D(A)_{grs}$ values obtained in the first step into the slot occupied by $\mathbf{S(A)}$ in \ref{eq:3}. The iterations continue until both $D(A)_{grs}$ and $D(A)_{grs}$ ``freeze'' according to some stopping criterion ($\epsilon$). 
 
 \section{Two-Mode Relational Similarities}
 The basic purpose of this comment is to show that there is a simpler alternative to the iteration approach to computing generalized relational similarities in two-mode data. This alternative respects the basic spirit of Kovacs's proposal, namely, the principles of equivalence and duality, while exploiting the duality of actors and objects in two-mode networks more directly.
@@ -248,7 +248,7 @@ For both $\mathbf{AA}$ and $\mathbf{OO}$, the $ij^{th}$ entry is the number of o
 
 Once we have these one-mode projections, it is straightforward to compute similarity measures across actors based on their co-memberships and across objects in terms of the actors they share. The basic idea is that the similarity between actors increases as the number of common objects chosen increases, and the similarity between objects increases as the number of actors who choose both objects, suitably weighted by both actors ``expansiveness" and object ``popularity" (the diagonal entries of $\mathbf{AA}$ and $\mathbf{OO}$, respectively). 
 
-Many options are available here (and the results are invariant to this choice), but the cosine similarity is a straightforward candidate \citep{goodman1996single} For actors, this is given by:
+Many options are available here (and the results are invariant to this choice), but the cosine similarity is a straightforward candidate \citep{goodman1996single}. For actors, this is given by:
 
 \begin{equation}
     S(A)^{cos}_{ij} = \frac{AA_{ij}}{\sqrt{AA_{ii}AA_{jj}}}
@@ -374,27 +374,40 @@ Figure~\ref{fig:grm-events} replicates Kocacs's verbal description of the result
 As Figure~\ref{fig:tmrs-events} shows, the two-mode relational similarity approach yields results that are somewhat different from those obtained using the generalized relational similarities, but that are in some ways closer to the target clusters from Doreian et al.'s blockmodel solution \citeyearpar{doreian2004}. As with the Kovacs approach, events 1-6 and events 10-14 end up closely spaced and assigned to their own cluster. Events 7 and 8 fall into their own cluster as would be expected given the Doreian et al. partition. Event 9, however, is grouped with the event 10-14 cluster. In all, the two-mode relational similarity approach seems more effective at avoiding singleton clusters than the generalized similarity measure. 
 
   \begin{figure}[ht!]
-     \begin{subfigure}[b]{1.0\textwidth}
+  \centering
+     \begin{subfigure}[b]{0.4\textwidth}
         \centering
-        \includegraphics[width=1.0\textwidth]{Plots/untang-actors.png}
+        \includegraphics[width=1.0\textwidth]{Plots/dend-actors-grs.png}
         \caption{}
-        \label{fig:untang-actors}
+        \label{fig:dend-actors-grs}
     \end{subfigure} 
-     \begin{subfigure}[b]{1.0\textwidth}
+     \begin{subfigure}[b]{0.4\textwidth}
         \centering
-        \includegraphics[width=1.0\textwidth]{Plots/untang-events.png}
+        \includegraphics[width=1.0\textwidth]{Plots/dend-actors-tmrs.png}
         \caption{}
-        \label{fig:untang-events}
+        \label{fig:dend-actors-tmrs}
     \end{subfigure} 
-    \caption{.}
-    \label{fig:untang}
+     \begin{subfigure}[b]{0.4\textwidth}
+        \centering
+        \includegraphics[width=1.0\textwidth]{Plots/dend-events-grs.png}
+        \caption{}
+        \label{fig:dend-events-grs}
+    \end{subfigure} 
+     \begin{subfigure}[b]{0.4\textwidth}
+        \centering
+        \includegraphics[width=1.0\textwidth]{Plots/dend-events-tmrs.png}
+        \caption{}
+        \label{fig:dend-events-tmrs}
+    \end{subfigure} 
+    \caption{Actor and event dendrograms obtained from a hierarchical clustering partition based on the complete linkage merge criterion. Actors and events are colored based on cluster membership from a three-cluster cut.}
+    \label{fig:dends}
  \end{figure}
 
 
 \subsection{Correspondence between similarities}
-Figures \ref{fig:actors} and \ref{fig:events} suggest that the solutions returned by Kovacs's generalized relational similarities and the two-mode relational similarities are themselves similar. To get a more precise estimate of exactly \textit{how} similar, we can compare the dendrograms produced by a hierarchical clustering of both actors and events derived from each of the distances. To the extent that we get comparable groupings of objects 
+Figures \ref{fig:actors} and \ref{fig:events} suggest that the solutions returned by Kovacs's generalized relational similarities and the two-mode relational similarities are themselves similar. To get a more precise estimate of exactly \textit{how} similar, we can compare the dendrograms produced by a (complete linkage) hierarchical clustering of both actors and events derived from each of the distances. These are shown in Figure~\ref{fig:dends}: Figures~\ref{fig:dend-actors-grs} and~\ref{fig:dend-actors-tmrs} show the actor dendrograms, and Figures~\ref{fig:dend-events-grs} and~\ref{fig:dend-events-tmrs} show the corresponding event dendrograms. 
 
- 
+A simple measure from biostatistics, the cophenetic correlation distance ($c$), can be used to quantify how similar each pair of dendrograms is \citep{sokal1962comparison}.\footnote{The cophenetic correlation is the Pearson correlation between the cophenetic distance matrices implied by a hierarchical clustering partition (or in , where the cophenetic distance between objects is defined as the number of branches that have to be upwardly traversed before the two objects are merged into the same branch.} For the actor dendrograms $c = 0.98$, and for the event dendrograms $c = 0.99$, indicating that the two distance measures return practically indistinguishable object partitions for both actors and events. 
 
 \section{Conclusion}
 Kovacs \citeyearpar{kovacs2010} made a case that a desirable metric for relational similarity should respect at least two basic desiderata, which I have referred to as the principles of equivalence and duality, proposing an approach based on iterated correlations that met these criteria. In this short note, I have shown that we can get there using a more straightforward, non-iterative approach, more directly grounded in the principle of duality via the dual projection approach to analyzing two-mode data \citep{everett2013}. 
