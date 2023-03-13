@@ -176,8 +176,9 @@ date: "`r Sys.Date()`"
                            )
     names(corr.tab) <- c("Object", "Corr.", "p-value")
     kable(corr.tab) %>% 
-        kable_styling("striped") %>%
-        save_kable(here("Tabs", "corr-tab.png"))
+      kable_styling("striped") %>%
+      column_spec(1:3, color = "black") %>% 
+      save_kable(here("Tabs", "corr-tab.jpg"))
 ```
 
 
