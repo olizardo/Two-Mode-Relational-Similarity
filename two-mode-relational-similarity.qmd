@@ -7,12 +7,12 @@ date: "`r Sys.Date()`"
 # Setup
 ```{r setup}
     knitr::opts_chunk$set(include = TRUE, echo = TRUE, warning = FALSE, message = FALSE)
-    library(dendextend)
     library(factoextra)
     library(ggpubr)
     library(here)
     library(sjPlot)
     library(tidyverse)
+    library(vegan)
 ```
 
 # Data
@@ -162,34 +162,25 @@ date: "`r Sys.Date()`"
     save_plot(here("Plots", "tmrs-events.png"), width = 30, height = 25)
 ```
 
-```{r}
-    get.dist <- function(x) {
-     # Compute MDS
-     x <- (1 - x)/2
-     x <- x %>%
-       as.dist()
-    return(x)
-    }
-    dist.gs.a <- get.dist(gs.a$row.sims)
-    dist.tm.a <- get.dist(tm.a$row.sims)
-    hc.gs.a <- hclust(dist.gs.a, method = "complete")
-    hc.tm.a <- hclust(dist.tm.a, method = "complete")
-    dend.gs.a <- as.dendrogram(hc.gs.a)
-    dend.tm.a <- as.dendrogram(hc.tm.a)
+```{r Mantel Statistic}
+    library(kableExtra)
+    r.gs.tm.a <- mantel(dist.gs.a, dist.tm.a)
+    r.gs.tm.e <- mantel(dist.gs.e, dist.tm.e)
+    r.gs.cd.a <- mantel(dist.gs.a, dist.cd.a)
+    r.gs.cd.e <- mantel(dist.gs.e, dist.cd.e)
+    corr.tab <- data.frame(cbind(c("Actors", "Events"),
+                                 c(round(r.gs.tm.a$statistic, 2), 
+                                   round(r.gs.tm.e$statistic, 2)),
+                                 c(r.gs.tm.a$signif, r.gs.tm.e$signifr)
+                                 )
+                           )
+    names(corr.tab) <- c("Object", "Corr.", "p-value")
+    kable(corr.tab) %>% 
+        kable_styling("striped") %>%
+        save_kable(here("Tabs", "corr-tab.png"))
 ```
 
 
-```{r}
-    untang.dends <- dendlist(dend.gs.a, dend.tm.a) %>% 
-      untangle(method = "step2side")
-    png(file = here("Plots", "untang.png"), width=1200, height=600)
-    plot(untang.dends, 
-         main = paste("Entanglement =", round(entanglement(untang.dends), 2)),
-         sub = paste(("Cophenetic Correlation ="), 
-                     round(cor_cophenetic(dend.gs.a, dend.tm.a), 2)))
-    dev.off()
-    
-```
 
 
 
