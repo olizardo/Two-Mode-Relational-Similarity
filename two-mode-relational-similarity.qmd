@@ -62,32 +62,37 @@ date: "`r Sys.Date()`"
 # Functions
 
 ```{r Functions}
+    get.dist <- function(x) {
+      x <- (1 - x)/2
+      x <- as.dist(x)
+    return(x)
+    }
+
     get.mds <- function(x) {
-     # Compute MDS
-     x <- (1 - x)/2
-     x <- x %>%
-       as.dist() %>% 
-       cmdscale() 
-     colnames(x) <- c("Dim.1", "Dim.2")
-     return(x)
+      x <- get.dist(x) 
+      x <- cmdscale(x) 
+      colnames(x) <- c("Dim.1", "Dim.2")
+    return(x)
     }
     
     get.clus <- function(x, k = 3) {
-    # Clustering
+    # Hierarchical Clustering
       hclus.cent <- tibble(cluster = eclust(x, "hclust", method = "ward.D2",
                        k = k, graph = FALSE)$cluster) %>% 
       cbind(x)  %>% 
       group_by(cluster) %>% 
       summarize(across(starts_with("Dim"), mean)) %>% 
       dplyr::select(-1)
+      # Getting Cluster Centroids
       km.clust <- eclust(x, "kmeans", 
                        k = hclus.cent, graph = FALSE)$cluster 
       n <- rownames(x)
+      # K-Means Clustering
       x <- as_tibble(cbind(x, cluster = km.clust)) %>% 
         mutate(cluster = factor(cluster)) %>% 
         mutate(names = n)
-      return(x)    
-      }
+    return(x)    
+    }
     
     get.plot <- function(x, t = "", fsize = 14) {
     # Plot and color by groups
@@ -118,23 +123,30 @@ date: "`r Sys.Date()`"
 ```{r Clusters for actors and events based on gsr and tmrs}
     source("Functions/tm.corr.dist.R")
     source("Functions/gen.sim.corr.R")
-    #Actors
-    gs.a <- gen.sim.corr(A)
-    gs.e <- gen.sim.corr(A)
-    tm.a <- tm.corr.dist(A)
-    tm.e <- tm.corr.dist(A)
-```
+    source("Functions/gen.sim.corr.abs.R")
 
-```{r Performing MDS}
-    mds.gs.a <- get.mds(gs.a$row.sims)
-    mds.gs.e <- get.mds(gs.e$col.sims)
-    mds.tm.a <- get.mds(tm.a$row.sims)
-    mds.tm.e <- get.mds(tm.e$col.sims)
-```
-
-```{Performing Clustering}
+    # Getting Generalized Similarities
+    gs <- gen.sim.corr(A)
+    gs.abs <- gen.sim.corr.abs(A)
+    tm <- tm.corr.dist(A)
+    
+    #Performing MDS
+    mds.gs.a <- get.mds(gs$row.sims)
+    mds.gs.e <- get.mds(gs$col.sims)
+    
+    mds.gs.a.abs <- get.mds(gs.abs$row.sims)
+    mds.gs.e.abs <- get.mds(gs.abs$col.sims)
+    
+    mds.tm.a <- get.mds(tm$row.sims)
+    mds.tm.e <- get.mds(tm$col.sims)
+    
+    # Performing Clustering}
     clus.gs.a <- get.clus(mds.gs.a)
     clus.gs.e <- get.clus(mds.gs.e)
+
+    clus.gs.a.abs <- get.clus(mds.gs.a.abs)
+    clus.gs.e.abs <- get.clus(mds.gs.e.abs)
+    
     clus.tm.a <- get.clus(mds.tm.a)
     clus.tm.e <- get.clus(mds.tm.e)
 ```
@@ -151,7 +163,17 @@ date: "`r Sys.Date()`"
     plot.gs.e
     save_plot(here("Plots", "grs-events.png"), width = 30, height = 25)
     
-    plot.tm.a <- get.plot(clus.tm.a, fsize = 18,
+    plot.gs.a.abs <- get.plot(clus.gs.a.abs, 
+                          t = "Generalized Relational Similarity (Actors)")
+    plot.gs.a.abs
+    save_plot(here("Plots", "grs-actors-abs.png"), width = 30, height = 25)
+
+    plot.gs.e.abs <- get.plot(clus.gs.e.abs, 
+                          t = "Generalized Relational Similarity (Events)")
+    plot.gs.e.abs
+    save_plot(here("Plots", "grs-events-abs.png"), width = 30, height = 25)
+    
+    plot.tm.a <- get.plot(clus.tm.a, 
                           t = "Two-Mode Relational Similarity (Actors)")
     plot.tm.a
     save_plot(here("Plots", "tmrs-actors.png"), width = 30, height = 25)

@@ -1,4 +1,4 @@
-gen.sim.corr <- function(x, sigma = 0.001) {
+gen.sim.corr.abs <- function(x, sigma = 0.001) {
         library(expm) #package required for matrix multiplication in R
         r <- nrow(x) #Number of rows in the input matrix
         c <- ncol(x) #Number of columns in the input matrix
@@ -40,8 +40,8 @@ gen.sim.corr <- function(x, sigma = 0.001) {
                                 }
                         }
                 }
-                d.r.c <- sum(rowSums(p.r.c - r.c))
-                d.c.c <- sum(rowSums(p.c.c - c.c))
+                d.r.c <- sum(rowSums(abs(p.r.c) - abs(r.c)))
+                d.c.c <- sum(rowSums(abs(p.c.c) - abs(c.c)))
                 k <- k + 1
         }
         rownames(r.c) <- rownames(x)
