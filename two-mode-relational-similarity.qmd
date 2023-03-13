@@ -10,6 +10,7 @@ date: "`r Sys.Date()`"
     library(factoextra)
     library(ggpubr)
     library(here)
+    library(kableExtra)
     library(sjPlot)
     library(tidyverse)
     library(vegan)
@@ -183,13 +184,20 @@ date: "`r Sys.Date()`"
     plot.tm.e
     save_plot(here("Plots", "tmrs-events.png"), width = 30, height = 25)
 ```
-
+# Tables
 ```{r Mantel Statistic}
-    library(kableExtra)
+    dist.gs.a <- get.dist(gs$row.sims)
+    dist.gs.e <- get.dist(gs$col.sims)
+    dist.tm.a <- get.dist(tm$row.sims)
+    dist.tm.e <- get.dist(tm$col.sims)  
+    dist.cd.a <- get.dist(cor(t(A)))
+    dist.cd.e <- get.dist(cor(A))
+    
     r.gs.tm.a <- mantel(dist.gs.a, dist.tm.a)
     r.gs.tm.e <- mantel(dist.gs.e, dist.tm.e)
     r.gs.cd.a <- mantel(dist.gs.a, dist.cd.a)
     r.gs.cd.e <- mantel(dist.gs.e, dist.cd.e)
+    
     corr.tab <- data.frame(cbind(c("Actors", "Events"),
                                  c(round(r.gs.tm.a$statistic, 2), 
                                    round(r.gs.tm.e$statistic, 2)),
