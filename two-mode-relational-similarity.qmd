@@ -158,7 +158,7 @@ date: "`r Sys.Date()`"
     plot.gs.a
     save_plot(here("Plots", "grs-actors.png"), width = 30, height = 25)
 
-    plot.gs.e <- get.plot(clus.gs.e, 
+    plot.gs.e <- get.plot(clus.gs.e, fsize = 18,
                           t = "Generalized Relational Similarity (Events)")
     plot.gs.e
     save_plot(here("Plots", "grs-events.png"), width = 30, height = 25)
@@ -168,7 +168,7 @@ date: "`r Sys.Date()`"
     plot.gs.a.abs
     save_plot(here("Plots", "grs-actors-abs.png"), width = 30, height = 25)
 
-    plot.gs.e.abs <- get.plot(clus.gs.e.abs, 
+    plot.gs.e.abs <- get.plot(clus.gs.e.abs, fsize = 18,
                           t = "Generalized Relational Similarity (Events)")
     plot.gs.e.abs
     save_plot(here("Plots", "grs-events-abs.png"), width = 30, height = 25)
