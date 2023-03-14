@@ -64,14 +64,12 @@ date: "`r Sys.Date()`"
 
 ```{r Functions}
     get.dist <- function(x) {
-      x <- (1 - x)/2
-      x <- as.dist(x)
+      x <- as.dist((1 - x)/2)
     return(x)
     }
 
     get.mds <- function(x) {
-      x <- get.dist(x) 
-      x <- cmdscale(x) 
+      x <- cmdscale(get.dist(x))
       colnames(x) <- c("Dim.1", "Dim.2")
     return(x)
     }
@@ -115,6 +113,8 @@ date: "`r Sys.Date()`"
                      axis.title = element_text(size = 20),
                      title = element_text(size = 24)
                      )
+      p <- p + scale_y_continuous(limits = c(-.4, .4))
+      p <- p + scale_x_continuous(limits = c(-.6, .6))
       p <- p + ggtitle(t)
     return(p)
     }
