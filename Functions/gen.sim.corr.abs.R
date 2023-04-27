@@ -40,8 +40,8 @@ gen.sim.corr.abs <- function(x, sigma = 0.001) {
                                 }
                         }
                 }
-                d.r.c <- abs(sum(rowSums(abs(p.r.c) - abs(r.c))))
-                d.c.c <- abs(sum(rowSums(abs(p.c.c) - abs(c.c))))
+                d.r.c <- sum(rowSums(abs(p.r.c - r.c)))
+                d.c.c <- sum(rowSums(abs(p.c.c - c.c)))
                 k <- k + 1
         }
         rownames(r.c) <- rownames(x)
