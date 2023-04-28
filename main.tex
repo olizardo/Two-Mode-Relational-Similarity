@@ -343,12 +343,12 @@ Kovacs's generalized relational similarity and the two-mode relational similarit
         \caption{}
         \label{fig:tmrs-actors-sw}
     \end{subfigure} 
-    \caption{Two-dimensional metric multidimensional scaling plots of generalized relational similarities for actors in the Southern Women data. Colors correspond to a three-group hybrid k-means clustering of the relational similarities, with cluster centroids determined by a first-step hierarchical clustering of distances according to Ward's \citeyearpar{ward63} criterion.}
+    \caption{Two-dimensional metric multidimensional scaling plots of generalized and two-mode 0900relational similarities for actors in the Southern Women data. Colors correspond to a three-group hybrid k-means clustering of the relational similarities, with cluster centroids determined by a first-step hierarchical clustering of distances according to Ward's \citeyearpar{ward63} criterion.}
     \label{fig:actors-sw}
  \end{figure}
 
 \subsubsection{Actors}
-Figure \ref{fig:grs-actors-sw} shows the MDS two-dimensional plot of actors based on the generalized relational similarities for the Southern Women Data, closely replicating Kovacs's \citeyearpar{kovacs2010} Figure 12b using the author's implementation of Kovacs's algorithm written as a function for the \textit{R} statistical computing environment (see Supplementary materials). After $k = 110$ iterations, the algorithm converged (using $\epsilon = 0.001$). 
+Figure \ref{fig:grs-actors-sw} shows the MDS two-dimensional plot of actors based on the generalized relational similarities for the Southern Women Data, closely replicating Kovacs's \citeyearpar{kovacs2010} Figure 12b using the author's implementation of Kovacs's algorithm written as a function for the \textit{R} statistical computing environment (see Supplementary materials). After $k = 119$ iterations, the algorithm converged (using $\epsilon = 0.001$). 
 
 As Kovacs noted from a visual inspection of the MDS plot, the distribution of points in the two-dimensional MDS space obtained using the generalized relational similarities corresponds to the generalized blockmodeling solution reported by \citet{doreian2004}. The hybrid k-means analysis with three clusters specified largely agrees with that assessment. We can distinguish two larger sets of similar actors separated from one another and the more peripheral Dorothy and Pearl. Note, however, that using the generalized relational similarity approach, the k-means clustering misclassifies Pearl as belonging to the first large cluster and puts Dorothy in a singleton cluster. 
 
@@ -367,7 +367,7 @@ As Figure~\ref{fig:tmrs-actors-sw} shows, the two-mode relational similarity app
         \caption{}
         \label{fig:tmrs-events-sw}
     \end{subfigure} 
-    \caption{Two-dimensional metric multidimensional scaling plots of generalized relational similarities for events in the Southern Women data. Colors correspond to a three-group hybrid k-means clustering of the relational similarities, with cluster centroids determined by a first-step hierarchical clustering according to Ward's \citeyearpar{ward63} criterion.}
+    \caption{Two-dimensional metric multidimensional scaling plots of generalized and two-mode relational similarities for events in the Southern Women data. Colors correspond to a three-group hybrid k-means clustering of the relational similarities, with cluster centroids determined by a first-step hierarchical clustering according to Ward's \citeyearpar{ward63} criterion.}
     \label{fig:events-sw}
 \end{figure}
 
@@ -383,7 +383,7 @@ Figure~\ref{fig:grs-events-sw} reproduces Kocacs's verbal description of the res
 As Figure~\ref{fig:tmrs-events-sw} shows, the two-mode relational similarity approach yields results that are largely consistent with but also somewhat different from those obtained using the generalized relational similarities. These results are in some ways closer to the target event clusters from Doreian et al.'s blockmodel solution \citeyearpar{doreian2004}. As with the Kovacs approach, events 1-6 and events 10-14 end up closely spaced---save for event 11---and assigned to separate clusters. Events 7 and 8 fall into a separate cluster, as would be expected, given the Doreian et al. partition. Event 9, however, is grouped with the event 10-14 cluster. In all, the two-mode relational similarity approach seems more effective at avoiding singleton clusters than the generalized similarity measure. 
 
 \section{112th U.S. Senate Voting Network}
-One of the most fruitful applications of two-mode data analysis following work by Fowler \citeyearpar{fowler2006legislative} has been for studying political networks (see e.g., Neal \citeyearpar{neal2014backbone}). Kovacs included such an analysis in his article using data he collected from the 109th U.S. Senate. Political networks have the advantage that the partition quality of any given approach can be compared to the intuitive ``ground truth'' provided exogenous knowledge of institutionalized partisan divides. In this section, I re-analyze data from one year (2011-2012) of the 112th U.S. Congress analyzed by \citet[Chap. 8]{knoke2021multimodal} and publicly available in the \textit{R} package \texttt{migraph}. The two-mode network consists of 93 senators voting on 24 bills (one of the bills received unanimous support and is thus not considered in the analysis). Each cell of the affiliation matrix contains a one if a senator voted ``Yea" for the bill and a zero otherwise (``Nay''). 
+One of the most fruitful applications of two-mode data analysis following work by Fowler \citeyearpar{fowler2006legislative} has been for studying political networks (see e.g., Neal \citeyearpar{neal2014backbone}). Kovacs included such an analysis in his article using data he collected from the 109th U.S. Senate. Political networks have the advantage that the partition quality of any given approach can be compared to the intuitive ``ground truth'' provided exogenous knowledge of institutionalized partisan divides. In this section, I re-analyze data from one year (2011-2012) of the 112th U.S. Congress analyzed by \citet[Chap. 8]{knoke2021multimodal} and publicly available in the \textit{R} package \texttt{migraph}. The two-mode network consists of 102 senators voting on 24 bills (one of the bills received unanimous support and is thus not considered in the analysis). Each cell of the affiliation matrix contains a one if a senator voted ``Yea" for the bill and a zero otherwise (``Nay'').\footnote{See \citet[Appendices 8.1 and 8.2]{knoke2021multimodal} for the list of names of Senators with party affiliations and exact vote counts by party for each bill.} 
 
 \subsubsection{Agreement Between Distance Matrices}
 \begin{figure}[ht!]
@@ -391,23 +391,23 @@ One of the most fruitful applications of two-mode data analysis following work b
         \centering
         \includegraphics[width=0.7\textwidth]{Plots/grs-actors-sb.png}
         \caption{}
-        \label{fig:grs-actors}
+        \label{fig:grs-actors-sb}
     \end{subfigure} 
      \begin{subfigure}[b]{1.0\textwidth}
         \centering
         \includegraphics[width=0.7\textwidth]{Plots/tmrs-actors-sb.png}
         \caption{}
-        \label{fig:tmrs-actors}
+        \label{fig:tmrs-actors-sb}
     \end{subfigure} 
-    \caption{Two-dimensional metric multidimensional scaling plots of generalized relational similarities for Senators in the 112th U.S. Congress (2011-2012). Colors correspond to a three-group hybrid k-means clustering of the relational similarities, with cluster centroids determined by a first-step hierarchical clustering of distances according to Ward's \citeyearpar{ward63} criterion.}
+    \caption{Two-dimensional metric multidimensional scaling plots of generalized and two-mode relational similarities for Senators in the 112th U.S. Congress (2011-2012). Colors correspond to a three-group hybrid k-means clustering of the relational similarities, with cluster centroids determined by a first-step hierarchical clustering of distances according to Ward's \citeyearpar{ward63} criterion.}
     \label{fig:actors-sb}
  \end{figure}
 
 \subsubsection{Actors}
-Figure~\ref{fig:actors-sb} shows 
-\subsubsection{Bills}
-  \begin{figure}[ht!]
-     \begin{subfigure}[b]{1.0\textwidth}
+Figure~\ref{fig:grs-actors-sb} shows the MDS two-dimensional plot of Senators based on the generalized relational similarities (converging after 21 iterations with $\epsilon = 0.001$). As in Kovacs analysis of the data from 109th U.S. Senate, the Generalized Relational Similarity approach does a good job of capturing the partisan divide in the one year of data from the 112th congress from \citet{knoke2021multimodal}. The hybrid k-means with three clusters solution based on the MDS distances separates Democrats (on the left) and Republicans (on the right) assigning the ``centrist'' Senator Murkowski from Alaska to a singleton cluster. As shown in~\ref{fig:tmrs-actors-sb} the two-mode relational similarities produce results that are substantively indistinguishable from the iterative approach. Democrats and Republicans are assigned to separate clusters based on the two-mode relational similarities and Murkowski is assigned to a singleton cluster.\footnote{Note that both approaches group Susan Collins with the Democrats, as she was then considered a ``liberal republican.''}
+
+\begin{figure}[ht!]
+    \begin{subfigure}[b]{1.0\textwidth}
         \centering
         \includegraphics[width=0.7\textwidth]{Plots/grs-events-sb.png}
         \caption{}
@@ -419,10 +419,13 @@ Figure~\ref{fig:actors-sb} shows
         \caption{}
         \label{fig:tmrs-events-sb}
     \end{subfigure} 
-    \caption{Two-dimensional metric multidimensional scaling plots of generalized relational similarities for Bills voted by Senators in the 112th U.S. Congress (2011-2012). Colors correspond to a three-group hybrid k-means clustering of the relational similarities, with cluster centroids determined by a first-step hierarchical clustering according to Ward's \citeyearpar{ward63} criterion.}
+    \caption{Two-dimensional metric multidimensional scaling plots of generalized and two-mode relational similarities for Bills voted by Senators in the 112th U.S. Congress (2011-2012). Colors correspond to a three-group hybrid k-means clustering of the relational similarities, with cluster centroids determined by a first-step hierarchical clustering according to Ward's \citeyearpar{ward63} criterion.}
     \label{fig:events-sb}
- \end{figure}
- 
+\end{figure}
+
+\subsubsection{Bills}
+Figure~\ref{fig:grs-events-sb} shows the corresponding analysis for the bills. Once again, both the generalized relational similarities and the two-mode relational similarities produce comparable results. Both strategies separate bills that received overwhelming Democratic support (on the left) from those that received overwhelming Republican support (on the right). Both approaches also identify the one bill that received overwhelming bipartisan support (215b: Defense Authorization/Iran Sanctions). The one difference is that the two mode relational similarity also assigns bill 251 to the third (bipartisan) cluster. This is a bill on ``Tax Rates Extensions'' supported by the great majority of Democrats and Republicans but which received a few dissenting votes from both sides (three from Democrats and five from Republicans). 
+
 \section{Conclusion}
 Kovacs \citeyearpar{kovacs2010} made a case that a desirable metric for relational similarity should respect at least two basic desiderata, which I have referred to as the principles of equivalence and duality, proposing an approach based on iterated correlations that met these criteria. In this short note, I have shown that we can get there using a more straightforward, non-iterative approach, more directly grounded in the principle of duality via the dual projection approach to analyzing two-mode data \citep{everett2013}. 
 
