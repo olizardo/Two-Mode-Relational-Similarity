@@ -64,8 +64,10 @@ date: "`r Sys.Date()`"
 ```{r Knoke/Diani Political Data}
     g1 <- mpn_RepSxP
     g2 <- mpn_DemSxP
+    g3 <- mpn_OverSxP
     g <- g1 %u% g2
-    g <- delete_vertices(g, c(63:117, 125, 166:188))
+    g <- g  %u% g3
+    g <- delete_vertices(g, c(63:117, 166:188))
     V(g)$name
     affil.el <- data.frame(as_edgelist(g))
     r <- length(unique(affil.el$X1))
@@ -78,6 +80,7 @@ date: "`r Sys.Date()`"
       j <- which(colnames(B) == affil.el[e, 2])
       B[i, j] <- 1
     }
+    B <- B[, -which(colSums(B) == nrow(B))]
     B
 ```
 
@@ -164,14 +167,13 @@ date: "`r Sys.Date()`"
     
     clus.tm.a <- get.clus(mds.tm.a)
     clus.tm.e <- get.clus(mds.tm.e)
-```
-
-```{r Plotting}
+    
+    #Plotting
     get.plot(clus.gs.a, t = "Generalized Relational Similarity (Actors)")
     save_plot(here("Plots", "grs-actors-sw.png"), width = 30, height = 25)
 
     get.plot(clus.gs.e, fsize = 18,t = "Generalized Relational Similarity (Events)")
-    save_plot(here("Plots", "grs-events0-sw.png"), width = 30, height = 25)
+    save_plot(here("Plots", "grs-events-sw.png"), width = 30, height = 25)
     
     get.plot(clus.tm.a, t = "Two-Mode Relational Similarity (Actors)")
     save_plot(here("Plots", "tmrs-actors-sw.png"), width = 30, height = 25)
@@ -179,7 +181,6 @@ date: "`r Sys.Date()`"
     get.plot(clus.tm.e, fsize = 18, t = "Two-Mode Relational Similarity (Events)")
     save_plot(here("Plots", "tmrs-events-sw.png"), width = 30, height = 25)
 ```
-
 
 ```{r Clusters for actors and events based on gsr and tmrs (Senators)}
     source("Functions/tm.corr.dist.R")
@@ -202,19 +203,22 @@ date: "`r Sys.Date()`"
     
     clus.tm.a <- get.clus(mds.tm.a)
     clus.tm.e <- get.clus(mds.tm.e)
-```
-
-```{r Plotting}
-    get.plot(clus.gs.a, t = "Generalized Relational Similarity (Actors)")
+    
+    # Plotting
+    get.plot(clus.gs.a, fsize = 10, t = "Generalized Relational Similarity (Actors)",
+             pal = c("Blue", "Red", "Purple"))
     save_plot(here("Plots", "grs-actors-sb.png"), width = 30, height = 25)
 
-    get.plot(clus.gs.e, fsize = 18,t = "Generalized Relational Similarity (Events)")
+    get.plot(clus.gs.e, fsize = 18,t = "Generalized Relational Similarity (Events)",
+             pal = c("Blue", "Purple", "Red"))
     save_plot(here("Plots", "grs-events-sb.png"), width = 30, height = 25)
     
-    get.plot(clus.tm.a, t = "Two-Mode Relational Similarity (Actors)")
+    get.plot(clus.tm.a, fsize = 10, t = "Two-Mode Relational Similarity (Actors)",
+             pal = c("Blue", "Red", "Purple"))
     save_plot(here("Plots", "tmrs-actors-sb.png"), width = 30, height = 25)
     
-    get.plot(clus.tm.e, fsize = 18, t = "Two-Mode Relational Similarity (Events)")
+    get.plot(clus.tm.e, fsize = 18, t = "Two-Mode Relational Similarity (Events)",
+             pal = c("Blue", "Purple", "Red"))
     save_plot(here("Plots", "tmrs-events-sb.png"), width = 30, height = 25)
 ```
 
