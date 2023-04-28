@@ -385,7 +385,7 @@ As Figure~\ref{fig:tmrs-events-sw} shows, the two-mode relational similarity app
 \section{112th U.S. Senate Voting Network}
 One of the most fruitful applications of two-mode data analysis following work by Fowler \citeyearpar{fowler2006legislative} has been for studying political networks (see e.g., Neal \citeyearpar{neal2014backbone}). Kovacs included such an analysis in his article using data he collected from the 109th U.S. Senate. Political networks have the advantage that the partition quality of any given approach can be compared to the intuitive ``ground truth'' provided exogenous knowledge of institutionalized partisan divides. In this section, I re-analyze data from one year (2011-2012) of the 112th U.S. Congress analyzed by \citet[Chap. 8]{knoke2021multimodal} and publicly available in the \textit{R} package \texttt{migraph}. The two-mode network consists of 102 senators voting on 24 bills (one of the bills received unanimous support and is thus not considered in the analysis). Each cell of the affiliation matrix contains a one if a senator voted ``Yea" for the bill and a zero otherwise (``Nay'').\footnote{See \citet[Appendices 8.1 and 8.2]{knoke2021multimodal} for the list of names of Senators with party affiliations and exact vote counts by party for each bill.} 
 
-\subsubsection{Agreement Between Distance Matrices}
+\subsection{Agreement Between Distance Matrices}
 \begin{figure}[ht!]
      \begin{subfigure}[b]{1.0\textwidth}
         \centering
@@ -403,7 +403,7 @@ One of the most fruitful applications of two-mode data analysis following work b
     \label{fig:actors-sb}
  \end{figure}
 
-\subsubsection{Actors}
+\subsection{Actors}
 Figure~\ref{fig:grs-actors-sb} shows the MDS two-dimensional plot of Senators based on the generalized relational similarities (converging after 21 iterations with $\epsilon = 0.001$). As in Kovacs analysis of the data from 109th U.S. Senate, the Generalized Relational Similarity approach does a good job of capturing the partisan divide in the one year of data from the 112th congress from \citet{knoke2021multimodal}. The hybrid k-means with three clusters solution based on the MDS distances separates Democrats (on the left) and Republicans (on the right) assigning the ``centrist'' Senator Murkowski from Alaska to a singleton cluster. As shown in~\ref{fig:tmrs-actors-sb} the two-mode relational similarities produce results that are substantively indistinguishable from the iterative approach. Democrats and Republicans are assigned to separate clusters based on the two-mode relational similarities and Murkowski is assigned to a singleton cluster.\footnote{Note that both approaches group Susan Collins with the Democrats, as she was then considered a ``liberal republican.''}
 
 \begin{figure}[ht!]
@@ -423,7 +423,7 @@ Figure~\ref{fig:grs-actors-sb} shows the MDS two-dimensional plot of Senators ba
     \label{fig:events-sb}
 \end{figure}
 
-\subsubsection{Bills}
+\subsection{Bills}
 Figure~\ref{fig:grs-events-sb} shows the corresponding analysis for the bills. Once again, both the generalized relational similarities and the two-mode relational similarities produce comparable results. Both strategies separate bills that received overwhelming Democratic support (on the left) from those that received overwhelming Republican support (on the right). Both approaches also identify the one bill that received overwhelming bipartisan support (215b: Defense Authorization/Iran Sanctions). The one difference is that the two mode relational similarity also assigns bill 251 to the third (bipartisan) cluster. This is a bill on ``Tax Rates Extensions'' supported by the great majority of Democrats and Republicans but which received a few dissenting votes from both sides (three from Democrats and five from Republicans). 
 
 \section{Conclusion}
