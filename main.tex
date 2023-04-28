@@ -321,10 +321,10 @@ In this section, I re-analyze Davis et al.'s \citeyearpar{davis1941}, Southern W
 Figures \ref{fig:actors-sw} and \ref{fig:events-sw} summarize the main thrust of the findings.\footnote{All plots are built using the \texttt{ggplot2} grammar of graphics \citep{wickham16}, particularly the \texttt{ggscatter} function from the package \texttt{ggpubr} \citep{kassambara}.} Like Kovacs, I present a multidimensional scaling (MDS) solution based a matrix of distances, computed as $d_{ij} = \frac{(1-s_{ij})}{2}$, where $d_{ij}$ is the distance and $s_{ij}$ is the relevant similarity between objects $i$ and $j$. I depart from Kovacs's original analysis in that I use a ``hybrid'' (hierarchical and k-means) clustering of the MDS distances to obtain data-driven groupings of the objects \citep{chen2005novel}, rather than just ``eyeballing'' the MDS plot. This also allows us to better detect more subtle differences in the quality of the MDS solutions---e.g., relative to \citet{doreian2004}---using the generalized relational similarities and the two-mode relational similarities. 
 
 \begin{table}[ht!]
-    \caption{Mantel statistic and associated p-values for the agreement between distance matrices between actors and events computed based on generalized relational similarities and two-mode relational similarities.}
+    \caption{Mantel statistic and associated p-values for the agreement between distance matrices between actors and events in the Southern Women data computed based on generalized relational similarities and two-mode relational similarities.}
     \centering
-    \includegraphics[width=1.0\textwidth]{Tabs/corr-tab.jpg}
-    \label{tab:mantel}
+    \includegraphics[width=1.0\textwidth]{Tabs/corr-tab-sw.jpg}
+    \label{tab:mantel-sw}
 \end{table}
   
 \subsubsection{Agreement Between Distance Matrices}
@@ -386,6 +386,13 @@ As Figure~\ref{fig:tmrs-events-sw} shows, the two-mode relational similarity app
 One of the most fruitful applications of two-mode data analysis following work by Fowler \citeyearpar{fowler2006legislative} has been for studying political networks (see e.g., Neal \citeyearpar{neal2014backbone}). Kovacs included such an analysis in his article using data he collected from the 109th U.S. Senate. Political networks have the advantage that the partition quality of any given approach can be compared to the intuitive ``ground truth'' provided exogenous knowledge of institutionalized partisan divides. In this section, I re-analyze data from one year (2011-2012) of the 112th U.S. Congress analyzed by \citet[Chap. 8]{knoke2021multimodal} and publicly available in the \textit{R} package \texttt{migraph}. The two-mode network consists of 102 senators voting on 24 bills (one of the bills received unanimous support and is thus not considered in the analysis). Each cell of the affiliation matrix contains a one if a senator voted ``Yea" for the bill and a zero otherwise (``Nay'').\footnote{See \citet[Appendices 8.1 and 8.2]{knoke2021multimodal} for the list of names of Senators with party affiliations and exact vote counts by party for each bill.} 
 
 \subsection{Agreement Between Distance Matrices}
+\begin{table}[ht!]
+    \caption{Mantel statistic and associated p-values for the agreement between distance matrices between Senators and Bills in \citet{knoke2021multimodal} U.S. Senators data computed based on generalized relational similarities and two-mode relational similarities.}
+    \centering
+    \includegraphics[width=1.0\textwidth]{Tabs/corr-tab-sb.jpg}
+    \label{tab:mantel-sb}
+\end{table}
+
 \begin{figure}[ht!]
      \begin{subfigure}[b]{1.0\textwidth}
         \centering
