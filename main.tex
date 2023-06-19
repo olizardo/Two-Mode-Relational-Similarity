@@ -26,6 +26,7 @@
 \usepackage{graphicx}
 \usepackage{caption}
 \usepackage{subcaption}
+\usepackage{booktabs}
 
 %%%Author definitions
 \def\tsc#1{\csdef{#1}{\textsc{\lowercase{#1}}\xspace}}
@@ -77,43 +78,43 @@
 %       auid=000,
 %       bioid=1,
 %       prefix=Sir,
-%       orcid=0000-0000-0000-0000,
+       %orcid=0000-0002-5405-3007,
 %       facebook=<facebook id>,
 %       twitter=<twitter id>,
 %       linkedin=<linkedin id>,
 %       gplus=<gplus id>]
-%\author[1]{Omar Lizardo}[orcid=0000-0001-7511-2910]
+\author[1]{Omar Lizardo}[orcid=0000-0001-7511-2910]
 
 % Corresponding author indication
-%\cormark[1]
+\cormark[1]
 
 % Footnote of the first author
-%\fnmark[1]
+\fnmark[1]
 
 % Email id of the first author
-%\ead{olizardo@soc.ucla.edu}
+\ead{olizardo@soc.ucla.edu}
 
 % URL of the first author
-%\ead[url]{http://olizardo.bol.ucla.edu/}
+\ead[url]{http://olizardo.bol.ucla.edu/}
 
 %  Credit authorship
-%\credit{Conceptualization of this study, Methodology, Software}
+\credit{Conceptualization of this study, Methodology, Software}
 
-% Address/affiliation
-%\affiliation[1]{organization={University of California, Los Angeles},
- %   addressline={264 Haines Hall}, 
- %   city={Los Angeles},
-    %citysep={}, % Uncomment if no comma needed between city and postcode
- %    postcode={90095}, 
- %    state={CA},
- %    country={USA}}
+%Address/affiliation
+\affiliation[1]{organization={University of California, Los Angeles},
+    addressline={264 Haines Hall}, 
+    city={Los Angeles},
+    %citysep={},  Uncomment if no comma needed between city and postcode
+     postcode={90095}, 
+     state={CA},
+     country={USA}}
 
-% Corresponding author text
-%\cortext[cor1]{Corresponding author}
+ %Corresponding author text
+\cortext[cor1]{Corresponding author}
 %\cortext[cor2]{Principal corresponding author}
 
-% Footnote text
-%\fntext[fn1]{This paper was written while the author was partially supported by National Science Foundation grant HNDS-R \#2214215.}
+%Footnote text
+\fntext[fn1]{This paper was written while the author was partially supported by National Science Foundation grant HNDS-R \#2214215.}
  % author as well.}
 %\fntext[fn2]{Another author footnote, this is a very long footnote and
  % it should be a really long footnote. But this footnote is not yet
@@ -135,11 +136,11 @@ In a previous paper, Kovacs \citeyearpar{kovacs2010} proposed a generalized rela
 % \includegraphics{figs/grabs.pdf}
 % \end{graphicalabstract}
 
- Research highlights
+%Research highlights
 \begin{highlights}
     \item Previous work has developed measures of generalized similarity based on iterated correlations for two-mode data.
-    \item This paper proposes a non-iterative measure of generalized similarity for two-mode data based on the projection approach.
-    \item The paper shows that the two-mode relational similarity performs as well as the iterative correlations approach. 
+   \item This paper proposes a non-iterative measure of generalized similarity for two-mode data based on the projection approach.
+   \item The paper shows that the two-mode relational similarity performs as well as the iterative correlations approach. 
 \end{highlights}
 
 % Keywords
@@ -323,7 +324,12 @@ Figures \ref{fig:actors-sw} and \ref{fig:events-sw} summarize the main thrust of
 \begin{table}[ht!]
     \caption{Mantel statistic and associated p-values for the agreement between distance matrices between actors and events in the Southern Women data computed based on generalized relational similarities and two-mode relational similarities.}
     \centering
-    \includegraphics[width=1.0\textwidth]{Tabs/corr-tab-sw.jpg}
+    \begin{tabular}{lll}
+        \hline
+        \textbf{Object}                       & \textbf{corr.}            & \textbf{p-value}           \\ \hline
+        \multicolumn{1}{|l|}{\textit{Actors}} & \multicolumn{1}{l|}{0.94} & \multicolumn{1}{l|}{0.001} \\ \hline
+        \multicolumn{1}{|l|}{\textit{Events}} & \multicolumn{1}{l|}{0.96} & \multicolumn{1}{l|}{0.001} \\ \hline
+    \end{tabular}
     \label{tab:mantel-sw}
 \end{table}
   
@@ -389,7 +395,12 @@ One of the most fruitful applications of two-mode data analysis following work b
 \begin{table}[ht!]
     \caption{Mantel statistic and associated p-values for the agreement between distance matrices between Senators and Bills in \citet{knoke2021multimodal} U.S. Senators data computed based on generalized relational similarities and two-mode relational similarities.}
     \centering
-    \includegraphics[width=1.0\textwidth]{Tabs/corr-tab-sb.jpg}
+    \begin{tabular}{lll}
+        \hline
+        \textbf{Object}                       & \textbf{corr.}            & \textbf{p-value}           \\ \hline
+        \multicolumn{1}{|l|}{\textit{Actors}} & \multicolumn{1}{l|}{1.0} & \multicolumn{1}{l|}{0.001} \\ \hline
+        \multicolumn{1}{|l|}{\textit{Events}} & \multicolumn{1}{l|}{0.96} & \multicolumn{1}{l|}{0.001} \\ \hline
+    \end{tabular}
     \label{tab:mantel-sb}
 \end{table}
 
