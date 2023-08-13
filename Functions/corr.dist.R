@@ -35,5 +35,5 @@ corr.dist <- function(x) {
      colnames(r.c) <- rownames(x)
      rownames(c.c) <- colnames(x)
      colnames(c.c) <- colnames(x)
-     return(list(row.corrs = r.c, col.corrs = c.c))
+     return(list(row.sims = r.c, col.sims = c.c))
 }

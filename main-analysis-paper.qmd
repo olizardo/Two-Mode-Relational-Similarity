@@ -10,10 +10,11 @@ date: "`r Sys.Date()`"
     library(factoextra)
     library(ggpubr)
     library(here)
+    library(igraph)
     library(kableExtra)
+    library(migraph)
     library(sjPlot)
     library(tidyverse)
-    library(vegan)
 ```
 
 # Data
@@ -57,8 +58,30 @@ date: "`r Sys.Date()`"
                  }
              }
      }
-     A
 ```
+
+```{r Knoke/Diani Political Data}
+    g1 <- mpn_RepSxP
+    g2 <- mpn_DemSxP
+    g3 <- mpn_OverSxP
+    g <- g1 %u% g2
+    g <- g  %u% g3
+    g <- delete_vertices(g, c(63:117, 166:188))
+    V(g)$name
+    affil.el <- data.frame(as_edgelist(g))
+    r <- length(unique(affil.el$X1))
+    c <- length(unique(affil.el$X2))
+    B <- matrix(0, r, c)
+    rownames(B) <- unique(affil.el$X1)
+    colnames(B) <- unique(affil.el$X2)
+    for (e in 1:nrow(affil.el)) {
+      i <- which(rownames(B) == affil.el[e, 1])
+      j <- which(colnames(B) == affil.el[e, 2])
+      B[i, j] <- 1
+    }
+    B <- B[, -which(colSums(B) == nrow(B))]
+```
+
 
 # Functions
 
@@ -93,12 +116,12 @@ date: "`r Sys.Date()`"
     return(x)    
     }
     
-    get.plot <- function(x, t = "", fsize = 14) {
+    get.plot <- function(x, t = "", fsize = 14, pal = "Dark2") {
     # Plot and color by groups
       p <- ggscatter(x, x = "Dim.1", y = "Dim.2", 
               label = "names",
               color = "cluster",
-              palette = "Dark2",
+              palette = pal,
               size = 1.5,
               font.label = fsize,
               label.rectangle = TRUE,
@@ -121,82 +144,80 @@ date: "`r Sys.Date()`"
 ```
 
 # Analysis
-```{r Clusters for actors and events based on gsr and tmrs}
+```{r Clusters for actors and events based on gsr and tmrs (Southern Women)}
     source("Functions/tm.corr.dist.R")
-    source("Functions/gen.sim.corr.R")
     source("Functions/gen.sim.corr.abs.R")
 
     # Getting Generalized Similarities
-    gs <- gen.sim.corr(A)
-    gs.abs <- gen.sim.corr.abs(A)
+    gs <- gen.sim.corr.abs(A)
     tm <- tm.corr.dist(A)
     
     #Performing MDS 
-    mds.cd.a <- get.mds(cor(t(A)))
-    mds.cd.e <- get.mds(cor(A))
-    
     mds.gs.a <- get.mds(gs$row.sims)
     mds.gs.e <- get.mds(gs$col.sims)
-    
-    mds.gs.a.abs <- get.mds(gs.abs$row.sims)
-    mds.gs.e.abs <- get.mds(gs.abs$col.sims)
     
     mds.tm.a <- get.mds(tm$row.sims)
     mds.tm.e <- get.mds(tm$col.sims)
     
     # Performing Clustering}
-    clus.cd.a <- get.clus(mds.cd.a)
-    clus.cd.e <- get.clus(mds.cd.e)
-    
     clus.gs.a <- get.clus(mds.gs.a)
     clus.gs.e <- get.clus(mds.gs.e)
-
-    clus.gs.a.abs <- get.clus(mds.gs.a.abs)
-    clus.gs.e.abs <- get.clus(mds.gs.e.abs)
     
     clus.tm.a <- get.clus(mds.tm.a)
     clus.tm.e <- get.clus(mds.tm.e)
+    
+    #Plotting
+    get.plot(clus.gs.a, t = "Generalized Relational Similarity (Actors)")
+    save_plot(here("Plots", "grs-actors-sw.png"), width = 30, height = 25)
+
+    get.plot(clus.gs.e, fsize = 18,t = "Generalized Relational Similarity (Events)")
+    save_plot(here("Plots", "grs-events-sw.png"), width = 30, height = 25)
+    
+    get.plot(clus.tm.a, t = "Two-Mode Relational Similarity (Actors)")
+    save_plot(here("Plots", "tmrs-actors-sw.png"), width = 30, height = 25)
+    
+    get.plot(clus.tm.e, fsize = 18, t = "Two-Mode Relational Similarity (Events)")
+    save_plot(here("Plots", "tmrs-events-sw.png"), width = 30, height = 25)
 ```
-   
-# Plots
-```{r Plotting}
-    plot.cd.a <- get.plot(clus.cd.a, 
-                          t = "Correlation Distance (Actors)")
-    plot.cd.a
-    save_plot(here("Plots", "cd-actors.png"), width = 30, height = 25)
 
-    plot.cd.e <- get.plot(clus.cd.e, fsize = 18,
-                          t = "Correlation Distance (Events)")
-    plot.cd.e
-    save_plot(here("Plots", "cd-events.png"), width = 30, height = 25)
-    
-    plot.gs.a <- get.plot(clus.gs.a, 
-                          t = "Generalized Relational Similarity (Actors)")
-    plot.gs.a
-    save_plot(here("Plots", "grs-actors.png"), width = 30, height = 25)
+```{r Clusters for actors and events based on gsr and tmrs (Senators)}
+    source("Functions/tm.corr.dist.R")
+    source("Functions/gen.sim.corr.abs.R")
 
-    plot.gs.e <- get.plot(clus.gs.e, fsize = 18,
-                          t = "Generalized Relational Similarity (Events)")
-    plot.gs.e
-    save_plot(here("Plots", "grs-events.png"), width = 30, height = 25)
+    # Getting Generalized Similarities
+    gs <- gen.sim.corr.abs(B)
+    tm <- tm.corr.dist(B)
     
-    plot.gs.a.abs <- get.plot(clus.gs.a.abs, 
-                          t = "Generalized Relational Similarity (Actors)")
-    plot.gs.a.abs
-    save_plot(here("Plots", "grs-actors-abs.png"), width = 30, height = 25)
+    #Performing MDS 
+    mds.gs.a <- get.mds(gs$row.sims)
+    mds.gs.e <- get.mds(gs$col.sims)
+    
+    mds.tm.a <- get.mds(tm$row.sims)
+    mds.tm.e <- get.mds(tm$col.sims)
+    
+    # Performing Clustering}
+    clus.gs.a <- get.clus(mds.gs.a)
+    clus.gs.e <- get.clus(mds.gs.e)
+    
+    clus.tm.a <- get.clus(mds.tm.a)
+    clus.tm.e <- get.clus(mds.tm.e)
+    
+    # Plotting
+    get.plot(clus.gs.a, fsize = 10, t = "Generalized Relational Similarity (Actors)",
+             pal = c("Blue", "Red", "Purple"))
+    save_plot(here("Plots", "grs-actors-sb.png"), width = 30, height = 25)
 
-    plot.gs.e.abs <- get.plot(clus.gs.e.abs, fsize = 18,
-                          t = "Generalized Relational Similarity (Events)")
-    plot.gs.e.abs
-    save_plot(here("Plots", "grs-events-abs.png"), width = 30, height = 25)
+    get.plot(clus.gs.e, fsize = 18,t = "Generalized Relational Similarity (Events)",
+             pal = c("Blue", "Purple", "Red"))
+    save_plot(here("Plots", "grs-events-sb.png"), width = 30, height = 25)
     
-    plot.tm.a <- get.plot(clus.tm.a, 
-                          t = "Two-Mode Relational Similarity (Actors)")
-    plot.tm.a
-    save_plot(here("Plots", "tmrs-actors.png"), width = 30, height = 25)
+    get.plot(clus.tm.a, fsize = 10, t = "Two-Mode Relational Similarity (Actors)",
+             pal = c("Blue", "Red", "Purple"))
+    save_plot(here("Plots", "tmrs-actors-sb.png"), width = 30, height = 25)
     
-    plot.tm.e <- get.plot(clus.tm.e, fsize = 18,
-                          t = "Two-Mode Relational Similarity (Events)")
-    plot.tm.e
-    save_plot(here("Plots", "tmrs-events.png"), width = 30, height = 25)
+    get.plot(clus.tm.e, fsize = 18, t = "Two-Mode Relational Similarity (Events)",
+             pal = c("Blue", "Purple", "Red"))
+    save_plot(here("Plots", "tmrs-events-sb.png"), width = 30, height = 25)
 ```
+
+
