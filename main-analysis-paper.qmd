@@ -15,6 +15,8 @@ date: "`r Sys.Date()`"
     library(migraph)
     library(sjPlot)
     library(tidyverse)
+    source("https://raw.githubusercontent.com/olizardo/Two-Mode-Relational-Similarity/main/Functions/tm.corr.dist.R")
+    source("https://raw.githubusercontent.com/olizardo/Two-Mode-Relational-Similarity/main/Functions/gen.sim.corr.abs.R")
 ```
 
 # Data
@@ -46,18 +48,17 @@ date: "`r Sys.Date()`"
      e <- paste("E", c(1:14), sep = "")
      rownames(A) <- w
      colnames(A) <- e
-     
-     affil.el <- data.frame(matrix(ncol = 2, nrow = 0))
-     k <- 1
-     for (i in 1:nrow(A)) {
-         for(j in 1:ncol(A)) {
-             if (A[i, j] == 1) {
-               affil.el[k, 1] = w[i]
-               affil.el[k, 2] = e[j]
-             k <- k + 1
-                 }
-             }
-     }
+     #affil.el <- data.frame(matrix(ncol = 2, nrow = 0))
+     #k <- 1
+     #for (i in 1:nrow(A)) {
+        # for(j in 1:ncol(A)) {
+         #    if (A[i, j] == 1) {
+         #      affil.el[k, 1] = w[i]
+          #     affil.el[k, 2] = e[j]
+         #    k <- k + 1
+         #        }
+         #    }
+     #}
 ```
 
 ```{r Knoke/Diani Political Data}
@@ -69,16 +70,16 @@ date: "`r Sys.Date()`"
     g <- delete_vertices(g, c(63:117, 166:188))
     V(g)$name
     affil.el <- data.frame(as_edgelist(g))
-    r <- length(unique(affil.el$X1))
-    c <- length(unique(affil.el$X2))
+    r <- length(unique(affil.el[, 1]))
+    c <- length(unique(affil.el[, 2]))
     B <- matrix(0, r, c)
-    rownames(B) <- unique(affil.el$X1)
-    colnames(B) <- unique(affil.el$X2)
+    rownames(B) <- unique(affil.el[, 1])
+    colnames(B) <- unique(affil.el[, 2])
     for (e in 1:nrow(affil.el)) {
       i <- which(rownames(B) == affil.el[e, 1])
       j <- which(colnames(B) == affil.el[e, 2])
       B[i, j] <- 1
-    }
+      }
     B <- B[, -which(colSums(B) == nrow(B))]
 ```
 
@@ -145,9 +146,6 @@ date: "`r Sys.Date()`"
 
 # Analysis
 ```{r Clusters for actors and events based on gsr and tmrs (Southern Women)}
-    source("Functions/tm.corr.dist.R")
-    source("Functions/gen.sim.corr.abs.R")
-
     # Getting Generalized Similarities
     gs <- gen.sim.corr.abs(A)
     tm <- tm.corr.dist(A)
@@ -181,9 +179,6 @@ date: "`r Sys.Date()`"
 ```
 
 ```{r Clusters for actors and events based on gsr and tmrs (Senators)}
-    source("Functions/tm.corr.dist.R")
-    source("Functions/gen.sim.corr.abs.R")
-
     # Getting Generalized Similarities
     gs <- gen.sim.corr.abs(B)
     tm <- tm.corr.dist(B)
