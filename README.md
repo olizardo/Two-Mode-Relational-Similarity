@@ -5,3 +5,12 @@ Short paper showing a new and efficient way to compute generalized similarities 
 Kovács, B. (2010). A generalized model of relational similarity. Social Networks, 32(3), 197-211.
 
 Breiger, R. L. (1974). The duality of persons and groups. Social forces, 53(2), 181-190.
+
+## Replication
+
+This repository is set up with `renv` to ensure reproducibility. 
+
+To run the analysis:
+1. Open `Two-Mode-Relational-Similarity.Rproj` in RStudio/Positron.
+2. Run `renv::restore()` to install all required dependencies.
+3. Render `analysis.qmd` to generate the HTML report and the plots (saved in the `Plots/` directory).

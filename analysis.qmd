@@ -15,8 +15,8 @@ date: "`r Sys.Date()`"
     library(migraph)
     library(sjPlot)
     library(tidyverse)
-    source("https://raw.githubusercontent.com/olizardo/Two-Mode-Relational-Similarity/main/Functions/tm.corr.dist.R")
-    source("https://raw.githubusercontent.com/olizardo/Two-Mode-Relational-Similarity/main/Functions/gen.sim.corr.abs.R")
+    source(here::here("Functions", "tm.corr.dist.R"))
+    source(here::here("Functions", "gen.sim.corr.abs.R"))
 ```
 
 # Data
@@ -62,9 +62,9 @@ date: "`r Sys.Date()`"
 ```
 
 ```{r Knoke/Diani Political Data}
-    g1 <- mpn_RepSxP
-    g2 <- mpn_DemSxP
-    g3 <- mpn_OverSxP
+    g1 <- mpn_senate_rep
+    g2 <- mpn_senate_dem
+    g3 <- mpn_senate_over
     g <- g1 %u% g2
     g <- g  %u% g3
     g <- delete_vertices(g, c(63:117, 166:188))
@@ -145,12 +145,15 @@ date: "`r Sys.Date()`"
 ```
 
 # Analysis
+
+## Southern Women
+
 ```{r Clusters for actors and events based on gsr and tmrs (Southern Women)}
     # Getting Generalized Similarities
     gs <- gen.sim.corr.abs(A)
     tm <- tm.corr.dist(A)
     
-    #Performing MDS 
+    # Performing MDS 
     mds.gs.a <- get.mds(gs$row.sims)
     mds.gs.e <- get.mds(gs$col.sims)
     
@@ -164,11 +167,11 @@ date: "`r Sys.Date()`"
     clus.tm.a <- get.clus(mds.tm.a)
     clus.tm.e <- get.clus(mds.tm.e)
     
-    #Plotting
+    # Plotting
     get.plot(clus.gs.a, t = "Generalized Relational Similarity (Actors)")
     save_plot(here("Plots", "grs-actors-sw.png"), width = 30, height = 25)
 
-    get.plot(clus.gs.e, fsize = 18,t = "Generalized Relational Similarity (Events)")
+    get.plot(clus.gs.e, fsize = 18, t = "Generalized Relational Similarity (Events)")
     save_plot(here("Plots", "grs-events-sw.png"), width = 30, height = 25)
     
     get.plot(clus.tm.a, t = "Two-Mode Relational Similarity (Actors)")
@@ -176,7 +179,20 @@ date: "`r Sys.Date()`"
     
     get.plot(clus.tm.e, fsize = 18, t = "Two-Mode Relational Similarity (Events)")
     save_plot(here("Plots", "tmrs-events-sw.png"), width = 30, height = 25)
+    
+    # Correlation Table
+    cor_actors_sw <- cor(as.vector(gs$row.sims), as.vector(tm$row.sims))
+    cor_events_sw <- cor(as.vector(gs$col.sims), as.vector(tm$col.sims))
+    
+    tibble(
+      Network = c("Southern Women Actors", "Southern Women Events"),
+      `Pearson r` = c(cor_actors_sw, cor_events_sw)
+    ) %>%
+      kbl(digits = 3, caption = "Correlation between GRS and TMRS (Southern Women)") %>%
+      kable_styling(full_width = FALSE)
 ```
+
+## Senators
 
 ```{r Clusters for actors and events based on gsr and tmrs (Senators)}
     # Getting Generalized Similarities
@@ -213,6 +229,17 @@ date: "`r Sys.Date()`"
     get.plot(clus.tm.e, fsize = 18, t = "Two-Mode Relational Similarity (Events)",
              pal = c("Blue", "Purple", "Red"))
     save_plot(here("Plots", "tmrs-events-sb.png"), width = 30, height = 25)
+    
+    # Correlation Table
+    cor_actors_sb <- cor(as.vector(gs$row.sims), as.vector(tm$row.sims))
+    cor_events_sb <- cor(as.vector(gs$col.sims), as.vector(tm$col.sims))
+    
+    tibble(
+      Network = c("Senators Actors", "Senators Events"),
+      `Pearson r` = c(cor_actors_sb, cor_events_sb)
+    ) %>%
+      kbl(digits = 3, caption = "Correlation between GRS and TMRS (Senators)") %>%
+      kable_styling(full_width = FALSE)
 ```
 
 
